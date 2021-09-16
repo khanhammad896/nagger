@@ -4,7 +4,11 @@ import Avatar from "@material-ui/core/Avatar";
 import profile from "../assets/img2.jpg";
 import { Badge } from "@material-ui/core";
 import { HiOutlineUser, HiOutlineCalendar } from "react-icons/hi";
+import { IoIosArrowForward } from "react-icons/io";
+
+import { Link, useLocation } from "react-router-dom";
 const HomeCard = () => {
+  const location = useLocation();
   return (
     <div>
       <HomeCardWrapper>
@@ -34,14 +38,20 @@ const HomeCard = () => {
               Hello, are you there?
             </span>
           </div>
-          <div className="online-status">
-            <div>
-              <Badge className="online-icon" />
-              <div className="online-time font-regular text-dark">
-                Yesterday
+          {location.pathname !== "/reminders" ? (
+            <div className="online-status">
+              <div>
+                <Badge className="online-icon" />
+                <div className="online-time font-regular text-dark">
+                  Yesterday
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="expansion-container">
+              <IoIosArrowForward />
+            </div>
+          )}
         </div>
       </HomeCardWrapper>
     </div>
@@ -147,6 +157,17 @@ const HomeCardWrapper = styled.div`
     color: var(--background-theme);
   }
 
+  .expansion-container {
+    margin-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .expansion-container svg {
+    color: var(--background-theme);
+    font-size: 1.5em;
+  }
   @media screen and (max-width: 490px) {
     padding: 10px 10px;
 

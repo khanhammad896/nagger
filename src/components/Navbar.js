@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   IoHomeOutline,
@@ -7,29 +7,78 @@ import {
 } from "react-icons/io5";
 import { RiUser3Line } from "react-icons/ri";
 import { BiBellPlus, BiUserPlus } from "react-icons/bi";
-
+import { Link, useLocation } from "react-router-dom";
 const Navbar = () => {
+  const location = useLocation();
+  const [tabIndex, setTabIndex] = useState(() => {
+    if (location.pathname === "/") {
+      return 0;
+    }
+    if (location.pathname === "/reminders") {
+      return 1;
+    }
+
+    if (location.pathname === "/contacts") {
+      return 2;
+    }
+
+    if (location.pathname === "/calendar") {
+      return 3;
+    }
+  });
   return (
     <>
-      <NavbarWrapper className="font-regular">
-        <div className="menu-item text-light">
-          <IoHomeOutline />
-          <span className="menu-label">Home</span>
+      <NavbarWrapper className="font-light">
+        <div>
+          <Link
+            className={
+              tabIndex === 0 ? `menu-item text-light` : `menu-item text-dim`
+            }
+            to="/"
+            onClick={() => setTabIndex(0)}
+          >
+            <IoHomeOutline />
+            <span className="menu-label">Home</span>
+          </Link>
         </div>
-        <div className="menu-item text-light">
-          <IoNotificationsOutline />
-          <span className="menu-label">Home</span>
+        <div>
+          <Link
+            className={
+              tabIndex === 1 ? `menu-item text-light` : `menu-item text-dim`
+            }
+            to="/reminders"
+            onClick={() => setTabIndex(1)}
+          >
+            <IoNotificationsOutline />
+            <span className="menu-label">Reminder</span>
+          </Link>
         </div>
         <div className="menu-item circle-icon text-light">
           <BiBellPlus />
         </div>
-        <div className="menu-item text-light">
-          <RiUser3Line />
-          <span className="menu-label">Home</span>
+        <div>
+          <Link
+            className={
+              tabIndex === 2 ? `menu-item text-light` : `menu-item text-dim`
+            }
+            to="/contacts"
+            onClick={() => setTabIndex(2)}
+          >
+            <RiUser3Line />
+            <span className="menu-label">Contacts</span>
+          </Link>
         </div>
-        <div className="menu-item text-light">
-          <IoCalendarOutline />
-          <span className="menu-label">Home</span>
+        <div>
+          <Link
+            className={
+              tabIndex === 3 ? `menu-item text-light` : `menu-item text-dim`
+            }
+            to="/calendar"
+            onClick={() => setTabIndex(3)}
+          >
+            <IoCalendarOutline />
+            <span className="menu-label">Calendar</span>
+          </Link>
         </div>
       </NavbarWrapper>
     </>

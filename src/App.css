@@ -2,6 +2,9 @@
   --background-theme: #5c56cd;
   --tab-theme: #f0f4fd;
   --text-dark: #11214e;
+  --font-regular: "Poppins-Regular", sans-serif;
+  --font-light: "Poppins-Light", sans-serif;
+  --font-bold: "Poppins-Bold", sans-serif;
 }
 
 @font-face {
@@ -30,6 +33,16 @@
   flex-grow: 1;
   border-radius: 0 0 50px 50px;
   overflow: auto;
+  animation: slide 0.3s 1 ease-out forwards;
+}
+
+@keyframes slide {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
 }
 
 .tab::-webkit-scrollbar {
@@ -43,6 +56,9 @@
 .text-dark {
   color: var(--text-dark);
 }
+.text-dim {
+  color: #8884dc;
+}
 
 .font-regular {
   font-family: "Poppins-Regular", sans-serif;
@@ -54,4 +70,13 @@
 
 .font-light {
   font-family: "Poppins-Light", sans-serif;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+input::placeholder {
+  font-family: "Poppins-Regular", sans-serif;
+  color: #919394 !important;
 }
