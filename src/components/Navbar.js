@@ -54,7 +54,7 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="menu-item circle-icon text-light">
-          <BiBellPlus />
+          {tabIndex === 2 ? <BiUserPlus /> : <BiBellPlus />}
         </div>
         <div>
           <Link

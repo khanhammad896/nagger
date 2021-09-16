@@ -6,7 +6,7 @@ import { Badge } from "@material-ui/core";
 import { HiOutlineUser, HiOutlineCalendar } from "react-icons/hi";
 import { IoIosArrowForward } from "react-icons/io";
 
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const HomeCard = () => {
   const location = useLocation();
   return (
@@ -38,7 +38,8 @@ const HomeCard = () => {
               Hello, are you there?
             </span>
           </div>
-          {location.pathname !== "/reminders" ? (
+          {location.pathname !== "/reminders" &&
+          location.pathname !== "/calendar" ? (
             <div className="online-status">
               <div>
                 <Badge className="online-icon" />

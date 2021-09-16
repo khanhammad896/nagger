@@ -16,16 +16,11 @@ const Home = () => {
             <DateDivider dateRange={"Mon Jun 14, 2021"} day={"Today"} />
             <HomeCard />
             <HomeCard />
-
             <HomeCard />
-
             <DateDivider dateRange={"Tue Jun 15, 2021"} day={"Tomorrow"} />
             <HomeCard />
-
             <HomeCard />
-
             <HomeCard />
-
             <DateDivider
               dateRange={"Mon Jun 14 - Jun 21, 2021"}
               day={"Later this week"}

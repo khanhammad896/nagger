@@ -26,7 +26,6 @@ const AppBarContainer = styled.section`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
   .heading-container {
     display: flex;
     justify-content: flex-start;

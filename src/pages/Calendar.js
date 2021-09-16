@@ -1,20 +1,36 @@
 import React from "react";
 import styled from "styled-components";
 import Appbar from "../components/Appbar";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import DateDivider from "../components/DateDivider";
+import DatePicker from "../components/DatePicker";
+import HomeCard from "../components/HomeCard";
 const Calendar = () => {
   return (
     <section className="tab">
       <CalendarWrapper>
         <Appbar />
-        <div className="month-select-container">
-          <Select defaultValue={`June 2021`}>
-            <MenuItem>June 2021</MenuItem>
-            <MenuItem>July 2021</MenuItem>
-            <MenuItem>August 2021</MenuItem>
-          </Select>
-        </div>
+        <DatePicker />
+        <DateDivider
+          date={`Mon Jun 14, 2021`}
+          deadline={`2 Deadlines . 14 Alerts`}
+        />
+        <HomeCard />
+        <HomeCard />
+        <DateDivider
+          date={`Tue Jun 15, 2021`}
+          deadline={`0 Deadline . 0 Alert`}
+        />
+        <DateDivider
+          date={`Wed Jun 16, 2021`}
+          deadline={`0 Deadline . 10 Alerts`}
+        />
+        <HomeCard />
+        <HomeCard />
+        <DateDivider
+          date={`Thurs Jun 17, 2021`}
+          deadline={`1 Deadline . 0 Alerts`}
+        />
+        <HomeCard />
       </CalendarWrapper>
     </section>
   );
@@ -29,19 +45,4 @@ const CalendarWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-
-  .month-select-container {
-    margin-block-start: 20px;
-  }
-
-  .MuiInputBase-root {
-    width: 40%;
-    background: transparent;
-  }
-
-  .MuiInput-underline:hover:not(.Mui-disabled):before,
-  .MuiInput-underline:before,
-  .MuiInput-underline:after {
-    border: none;
-  }
 `;
