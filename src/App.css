@@ -33,16 +33,6 @@
   flex-grow: 1;
   border-radius: 0 0 50px 50px;
   overflow: auto;
-  animation: slide 0.3s 1 ease-out forwards;
-}
-
-@keyframes slide {
-  0% {
-    opacity: 0%;
-  }
-  100% {
-    opacity: 100%;
-  }
 }
 
 .tab::-webkit-scrollbar {

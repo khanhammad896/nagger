@@ -33,4 +33,15 @@ const CalendarWrapper = styled.div`
   .month-select-container {
     margin-block-start: 20px;
   }
+
+  .MuiInputBase-root {
+    width: 40%;
+    background: transparent;
+  }
+
+  .MuiInput-underline:hover:not(.Mui-disabled):before,
+  .MuiInput-underline:before,
+  .MuiInput-underline:after {
+    border: none;
+  }
 `;
