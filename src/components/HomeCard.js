@@ -20,26 +20,29 @@ const HomeCard = () => {
             <span className="user-name font-regular text-dark">
               Jonathan D. Dye
             </span>
-            <div className="recipients-date-container">
-              <div className="recipients-container">
-                <HiOutlineUser />
-                <span className="recipients-name-date font-light text-dark">
-                  You, Maria, Jogen
-                </span>
+            {location.pathname !== "/contacts" ? (
+              <div className="recipients-date-container">
+                <div className="recipients-container">
+                  <HiOutlineUser />
+                  <span className="recipients-name-date font-light text-dark">
+                    You, Maria, Jogen
+                  </span>
+                </div>
+                <div className="date-container">
+                  <HiOutlineCalendar />
+                  <span className="recipients-name-date font-light text-dark">
+                    Mon Jun 14, 2021
+                  </span>
+                </div>
               </div>
-              <div className="date-container">
-                <HiOutlineCalendar />
-                <span className="recipients-name-date font-light text-dark">
-                  Mon Jun 14, 2021
-                </span>
-              </div>
-            </div>
+            ) : null}
             <span className="message-text font-regular text-dark">
               Hello, are you there?
             </span>
           </div>
           {location.pathname !== "/reminders" &&
-          location.pathname !== "/calendar" ? (
+          location.pathname !== "/calendar" &&
+          location.pathname !== "/contacts" ? (
             <div className="online-status">
               <div>
                 <Badge className="online-icon" />

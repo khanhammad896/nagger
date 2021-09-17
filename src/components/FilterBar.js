@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { GoSettings } from "react-icons/go";
-const FilterBar = () => {
+const FilterBar = (props) => {
   return (
     <>
       <FilterBarWrapper>
         <div className="filter-bar-header font-regular text-dark">
-          <span>All Reminders</span>
+          <span>{props.title}</span>
         </div>
         <div className="filter-bar-icon">
           <GoSettings />

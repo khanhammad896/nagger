@@ -1,17 +1,48 @@
 import React from "react";
 import styled from "styled-components";
+import moment from "moment";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { Badge } from "@material-ui/core";
 import "../styles/DatePicker.css";
+import MomentUtils from "@date-io/moment";
+import {
+  DatePicker,
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 
-const DatePicker = () => {
+const DateSelector = () => {
+  const [selectedDate, setSelectedDate] = React.useState(
+    moment().format("dddd, MMMM DD YYYY")
+  );
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const now = moment();
+  console.log("Selected Date", selectedDate);
   return (
     <>
-      <DatePickerWrapper>
+      <DateSelectorWrapper>
         <div className="month-select-container">
-          <Select
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <KeyboardDatePicker
+              disableToolbar
+              format="dddd, MMM DD YYYY"
+              variant="inline"
+              margin="normal"
+              id="date-picker-inline"
+              value={selectedDate}
+              onChange={handleDateChange}
+              KeyboardButtonProps={{
+                "aria-label": "change date",
+              }}
+            />
+          </MuiPickersUtilsProvider>
+          {/* <Select
             labelId="month-select"
             defaultValue={`June 2021`}
             displayEmpty={true}
@@ -73,16 +104,16 @@ const DatePicker = () => {
               <span className="date-card-date">14</span>
               <span className="date-card-month">June</span>
             </div>
-          </div>
+          </div> */}
         </div>
-      </DatePickerWrapper>
+      </DateSelectorWrapper>
     </>
   );
 };
 
-export default DatePicker;
+export default DateSelector;
 
-const DatePickerWrapper = styled.div`
+const DateSelectorWrapper = styled.div`
   .month-select-container {
     margin-block-start: 20px;
     display: flex;
@@ -188,5 +219,28 @@ const DatePickerWrapper = styled.div`
 
   .date-card-month {
     font-size: 0.7em;
+  }
+
+  .MuiFormControl-root {
+    border: 1px solid var(--text-dark);
+    border-radius: 10px;
+    padding-inline-start: 10px;
+  }
+  .MuiFormControl-marginNormal {
+    margin: 0;
+  }
+  .MuiInputBase-input {
+    font-family: var(--font-regular);
+    font-size: 1.4em;
+    pointer-events: none;
+  }
+  .MuiIconButton-label {
+    color: var(--text-dark);
+  }
+
+  @media screen and (max-width: 400px) {
+    .MuiInputBase-root {
+      font-size: 14px;
+    }
   }
 `;

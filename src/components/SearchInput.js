@@ -3,12 +3,12 @@ import styled from "styled-components";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { FiSearch } from "react-icons/fi";
-const SearchInput = () => {
+const SearchInput = (props) => {
   return (
     <>
       <SearchWrapper>
         <Input
-          placeholder="Search for a reminder..."
+          placeholder={props.placeholder}
           endAdornment={
             <InputAdornment>
               <FiSearch />

@@ -11,23 +11,23 @@ const Calendar = () => {
         <Appbar />
         <DatePicker />
         <DateDivider
-          date={`Mon Jun 14, 2021`}
+          date={`Fri Sep 17, 2021`}
           deadline={`2 Deadlines . 14 Alerts`}
         />
         <HomeCard />
         <HomeCard />
         <DateDivider
-          date={`Tue Jun 15, 2021`}
+          date={`Sat Sep 18, 2021`}
           deadline={`0 Deadline . 0 Alert`}
         />
         <DateDivider
-          date={`Wed Jun 16, 2021`}
+          date={`Sun Sep 19, 2021`}
           deadline={`0 Deadline . 10 Alerts`}
         />
         <HomeCard />
         <HomeCard />
         <DateDivider
-          date={`Thurs Jun 17, 2021`}
+          date={`Mon Sep 20, 2021`}
           deadline={`1 Deadline . 0 Alerts`}
         />
         <HomeCard />

@@ -9,8 +9,8 @@ const Reminders = () => {
     <section className="tab">
       <ReminderWrapper>
         <Appbar />
-        <SearchInput />
-        <FilterBar />
+        <SearchInput placeholder="Search for a reminder..." />
+        <FilterBar title="All Reminders" />
         <HomeCard />
         <HomeCard />
         <HomeCard />
