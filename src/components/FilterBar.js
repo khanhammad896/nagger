@@ -62,14 +62,14 @@ const FilterBarWrapper = styled.div`
     .filter-bar-header,
     .filter-bar-icon,
     .import-icon {
-      font-size: 14px;
+      font-size: 12px;
     }
   }
 
   @media screen and (max-width: 320px) {
     .filter-bar-header,
     .filter-bar-icon {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
 `;
