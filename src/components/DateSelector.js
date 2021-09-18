@@ -220,5 +220,18 @@ const DateSelectorWrapper = styled.div`
     .MuiInputBase-root {
       font-size: 14px;
     }
+    .date-card,
+    .date-card-selected {
+      width: 60px;
+      height: 60px;
+    }
+    .date-card-selected {
+      width: 66px;
+      height: 66px;
+    }
+    .date-card,
+    .date-card-selected {
+      font-size: 12px;
+    }
   }
 `;

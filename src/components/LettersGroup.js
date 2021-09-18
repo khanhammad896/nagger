@@ -26,12 +26,10 @@ const LettersGroupWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-inline: 10px;
-  margin-top: 40px;
-  position: absolute;
-  right: 0;
+
   .letters,
   .letters-selected {
-    font-size: 0.8em;
+    font-size: 0.7em;
     font-family: var(--font-light);
     color: var(--text-dark);
     cursor: pointer;
@@ -41,5 +39,8 @@ const LettersGroupWrapper = styled.div`
   .letters-selected {
     font-size: 1em;
     opacity: 100%;
+  }
+  a {
+    line-height: 12px;
   }
 `;

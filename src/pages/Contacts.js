@@ -20,13 +20,15 @@ const Contacts = (props) => {
         <FilterBar title="All Contacts" />
         <div className="contacts-feed">
           <div className="divider-container">
-            {createArrayAtoZ().map((letter) => (
-              <>
-                <LetterDivider letter={letter} id={letter} />
-                <HomeCard />
-                <HomeCard />
-              </>
-            ))}
+            <div>
+              {createArrayAtoZ().map((letter) => (
+                <>
+                  <LetterDivider letter={letter} id={letter} />
+                  <HomeCard />
+                  <HomeCard />
+                </>
+              ))}
+            </div>
           </div>
           <LettersGroup />
         </div>
@@ -39,8 +41,8 @@ export default Contacts;
 
 const ContactsWrapper = styled.div`
   width: 100%;
-  margin-inline: auto;
   height: 100%;
+  margin-inline: auto;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -49,11 +51,24 @@ const ContactsWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  .divider-container > div::-webkit-scrollbar,
+  .contacts-feed::-webkit-scrollbar {
+    display: none;
   }
   .divider-container {
+    height: 100%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
+  }
+  .divider-container > div {
     overflow: auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
   }
 `;

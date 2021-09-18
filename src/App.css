@@ -34,7 +34,8 @@
   background-color: var(--tab-theme);
   flex-grow: 1;
   border-radius: 0 0 50px 50px;
-  overflow: auto;
+  /* overflow: auto; */
+  overflow: hidden;
 }
 
 .tab-stack {

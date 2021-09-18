@@ -60,8 +60,11 @@ const HomeWrapper = styled.div`
     justify-content: flex-start;
     flex-direction: column;
     flex-grow: 1;
+    overflow: auto;
   }
-
+  .feed-wrapper::-webkit-scrollbar {
+    display: none;
+  }
   @media screen and (max-width: 400px) {
     .tasks-info-container {
       font-size: 14px;

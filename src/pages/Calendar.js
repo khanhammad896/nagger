@@ -10,27 +10,29 @@ const Calendar = (props) => {
       <CalendarWrapper>
         <Appbar handleShowProfile={props.handleShowProfile} />
         <DatePicker />
-        <DateDivider
-          date={`Fri Sep 17, 2021`}
-          deadline={`2 Deadlines . 14 Alerts`}
-        />
-        <HomeCard />
-        <HomeCard />
-        <DateDivider
-          date={`Sat Sep 18, 2021`}
-          deadline={`0 Deadline . 0 Alert`}
-        />
-        <DateDivider
-          date={`Sun Sep 19, 2021`}
-          deadline={`0 Deadline . 10 Alerts`}
-        />
-        <HomeCard />
-        <HomeCard />
-        <DateDivider
-          date={`Mon Sep 20, 2021`}
-          deadline={`1 Deadline . 0 Alerts`}
-        />
-        <HomeCard />
+        <div className="calendar-feed">
+          <DateDivider
+            date={`Fri Sep 17, 2021`}
+            deadline={`2 Deadlines . 14 Alerts`}
+          />
+          <HomeCard />
+          <HomeCard />
+          <DateDivider
+            date={`Sat Sep 18, 2021`}
+            deadline={`0 Deadline . 0 Alert`}
+          />
+          <DateDivider
+            date={`Sun Sep 19, 2021`}
+            deadline={`0 Deadline . 10 Alerts`}
+          />
+          <HomeCard />
+          <HomeCard />
+          <DateDivider
+            date={`Mon Sep 20, 2021`}
+            deadline={`1 Deadline . 0 Alerts`}
+          />
+          <HomeCard />
+        </div>
       </CalendarWrapper>
     </section>
   );
@@ -45,4 +47,14 @@ const CalendarWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+
+  .calendar-feed {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .calendar-feed::-webkit-scrollbar {
+    display: none;
+  }
 `;

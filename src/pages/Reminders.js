@@ -11,14 +11,16 @@ const Reminders = (props) => {
         <Appbar handleShowProfile={props.handleShowProfile} />
         <SearchInput placeholder="Search for a reminder..." />
         <FilterBar title="All Reminders" />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
-        <HomeCard />
+        <div className="reminder-feed">
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+          <HomeCard />
+        </div>
       </ReminderWrapper>
     </section>
   );
@@ -33,4 +35,13 @@ const ReminderWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  .reminder-feed {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .reminder-feed::-webkit-scrollbar {
+    display: none;
+  }
 `;

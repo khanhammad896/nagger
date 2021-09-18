@@ -10,7 +10,9 @@ const AddContact = (props) => {
           backText={`New Contact`}
           hideProfile={props.hideAddContact}
         />
-        <section className="tab-stack"></section>
+        <section className="tab-stack">
+          <div className="add-contact-container"></div>
+        </section>
       </AddContactWrapper>
     </>
   );
@@ -25,6 +27,13 @@ const AddContactWrapper = styled.div`
   justify-content: flex-start;
   flex-direction: column;
   animation: slide-up 0.2s 1 ease-out forwards;
+
+  .add-contact-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
 
   @keyframes slide-up {
     0% {
