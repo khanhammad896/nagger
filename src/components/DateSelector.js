@@ -39,32 +39,9 @@ const DateSelector = (props) => {
               }}
             />
           </MuiPickersUtilsProvider>
-          {/* <Select
-            labelId="month-select"
-            defaultValue={`June 2021`}
-            displayEmpty={true}
-            renderValue={() => "June 2021"}
-            IconComponent={TiArrowUnsorted}
-          >
-            <MenuItem>June 2021</MenuItem>
-            <MenuItem>July 2021</MenuItem>
-            <MenuItem>August 2021</MenuItem>
-          </Select>
         </div>
         <div className="month-date-container">
           <div className="date-card-wrapper">
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
             <div className="date-card">
               <Badge className="date-dot" />
               <span className="date-card-day">Monday</span>
@@ -101,7 +78,13 @@ const DateSelector = (props) => {
               <span className="date-card-date">14</span>
               <span className="date-card-month">June</span>
             </div>
-          </div> */}
+            <div className="date-card">
+              <Badge className="date-dot" />
+              <span className="date-card-day">Monday</span>
+              <span className="date-card-date">14</span>
+              <span className="date-card-month">June</span>
+            </div>
+          </div>
         </div>
       </DateSelectorWrapper>
     </>
@@ -112,7 +95,7 @@ export default DateSelector;
 
 const DateSelectorWrapper = styled.div`
   .month-select-container {
-    margin-block-start: ${(props) => (props.addReminder ? 0 : 20)}px;
+    margin-block-start: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,8 +137,6 @@ const DateSelectorWrapper = styled.div`
     white-space: nowrap;
     margin-top: 20px;
     display: flex;
-    // justify-content: center;
-    // align-items: center;
   }
 
   .month-date-container::-webkit-scrollbar {
@@ -219,10 +200,8 @@ const DateSelectorWrapper = styled.div`
   }
 
   .MuiFormControl-root {
-    border: ${(props) =>
-      props.addReminder ? `none` : `1px solid var(--text-dark)`};
-    border-bottom: 1px solid var(--text-dark);
-    border-radius: ${(props) => (props.addReminder ? 0 : 10)}px;
+    border: 1px solid var(--text-dark);
+    border-radius: 10px;
     padding-inline-start: 10px;
   }
   .MuiFormControl-marginNormal {

@@ -136,6 +136,11 @@ const NavbarWrapper = styled.section`
     font-size: 0.8em;
   }
 
+  a:hover,
+  a:focus {
+    color: #fff;
+  }
+
   @media screen and (min-width: 719px) {
     .menu-item {
       font-size: 18px;
