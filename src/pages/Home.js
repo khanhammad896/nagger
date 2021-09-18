@@ -3,12 +3,12 @@ import styled from "styled-components";
 import DateDivider from "../components/DateDivider";
 import Appbar from "../components/Appbar";
 import HomeCard from "../components/HomeCard";
-const Home = () => {
+const Home = (props) => {
   return (
     <>
       <section className="tab">
         <HomeWrapper>
-          <Appbar />
+          <Appbar handleShowProfile={props.handleShowProfile} />
           <section className="tasks-info-container font-regular text-dark">
             <span>2 Deadlines . 14 Alerts Today</span>
           </section>

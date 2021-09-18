@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Avatar from "@material-ui/core/Avatar";
 import profile from "../assets/img2.jpg";
-import { Link } from "react-router-dom";
-const Appbar = () => {
+const Appbar = (props) => {
   return (
     <>
       <AppBarContainer className="app-bar">
@@ -12,9 +11,12 @@ const Appbar = () => {
           <span className="username text-dark font-bold">Dora Designer!</span>
         </div>
         <div className="avatar-container">
-          <Link to="/profile">
-            <Avatar alt="Profile" src={profile} />
-          </Link>
+          <Avatar
+            alt="Profile"
+            src={profile}
+            onClick={() => props.handleShowProfile()}
+            style={{ cursor: "pointer" }}
+          />
         </div>
       </AppBarContainer>
     </>

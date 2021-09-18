@@ -6,7 +6,7 @@ import Appbar from "../components/Appbar";
 import LetterDivider from "../components/LetterDivider";
 import HomeCard from "../components/HomeCard";
 import LettersGroup from "../components/LettersGroup";
-const Reminders = () => {
+const Contacts = (props) => {
   let createArrayAtoZ = (_) => {
     return Array.apply(null, { length: 26 }).map((x, i) =>
       String.fromCharCode(65 + i)
@@ -15,7 +15,7 @@ const Reminders = () => {
   return (
     <section className="tab">
       <ContactsWrapper>
-        <Appbar />
+        <Appbar handleShowProfile={props.handleShowProfile} />
         <SearchInput placeholder="Search for a contact" />
         <FilterBar title="All Contacts" />
         <div className="contacts-feed">
@@ -35,7 +35,7 @@ const Reminders = () => {
   );
 };
 
-export default Reminders;
+export default Contacts;
 
 const ContactsWrapper = styled.div`
   width: 100%;
@@ -54,5 +54,6 @@ const ContactsWrapper = styled.div`
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    overflow: auto;
   }
 `;

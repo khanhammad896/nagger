@@ -6,12 +6,15 @@ const SecondaryAppBar = (props) => {
   return (
     <>
       <SecondaryAppBarWrapper>
-        <Link to="/">
-          <div className="back-container text-light">
-            <IoIosArrowBack className="back-icon" />
-            <span className="back-text font-regular">{props.backText}</span>
-          </div>
-        </Link>
+        {/* <Link to="/"> */}
+        <div
+          className="back-container text-light"
+          onClick={() => props.hideProfile()}
+        >
+          <IoIosArrowBack className="back-icon" />
+          <span className="back-text font-regular">{props.backText}</span>
+        </div>
+        {/* </Link> */}
       </SecondaryAppBarWrapper>
     </>
   );
@@ -39,5 +42,14 @@ const SecondaryAppBarWrapper = styled.div`
   .back-text {
     margin-inline: 10px;
     font-size: 2em;
+  }
+  @media screen and (max-width: 400px) {
+    margin-block: 30px 15px;
+  }
+  .back-container {
+    font-size: 12px;
+  }
+  .back-text {
+    margin-inline: 5px;
   }
 `;

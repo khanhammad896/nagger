@@ -7,8 +7,8 @@ import profile from "../assets/img2.jpg";
 const Profile = (props) => {
   return (
     <>
-      <ProfileWrapper height={props.height}>
-        <SecondaryAppBar backText={`Profile`} />
+      <ProfileWrapper height={props.height} showProfile={props.showProfile}>
+        <SecondaryAppBar backText={`Profile`} hideProfile={props.hideProfile} />
         <section className="tab-stack">
           <div className="display-container">
             <div>
@@ -27,8 +27,9 @@ const ProfileWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justif-content: flex-start;
+  justify-content: flex-start;
   flex-direction: column;
+  position: absolute;
   animation: slide-up 0.2s 1 ease-out forwards;
 
   .display-container {

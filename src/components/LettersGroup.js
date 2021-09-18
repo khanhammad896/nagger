@@ -27,6 +27,8 @@ const LettersGroupWrapper = styled.div`
   flex-direction: column;
   margin-inline: 10px;
   margin-top: 40px;
+  position: absolute;
+  right: 0;
   .letters,
   .letters-selected {
     font-size: 0.8em;

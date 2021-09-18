@@ -8,7 +8,7 @@ import {
 import { RiUser3Line } from "react-icons/ri";
 import { BiBellPlus, BiUserPlus } from "react-icons/bi";
 import { Link, useLocation } from "react-router-dom";
-const Navbar = () => {
+const Navbar = (props) => {
   const location = useLocation();
   const [tabIndex, setTabIndex] = useState(() => {
     if (location.pathname === "/") {
@@ -53,9 +53,21 @@ const Navbar = () => {
             <span className="menu-label">Reminder</span>
           </Link>
         </div>
-        <div className="menu-item circle-icon text-light">
-          {tabIndex === 2 ? <BiUserPlus /> : <BiBellPlus />}
-        </div>
+        {tabIndex === 2 ? (
+          <div
+            className="menu-item circle-icon text-light"
+            onClick={() => props.handleShowAddContact()}
+          >
+            <BiUserPlus />
+          </div>
+        ) : (
+          <div
+            className="menu-item circle-icon text-light"
+            onClick={() => props.handleShowAddReminder()}
+          >
+            <BiBellPlus />
+          </div>
+        )}
         <div>
           <Link
             className={
@@ -114,6 +126,7 @@ const NavbarWrapper = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
   .circle-icon > svg {
     font-size: 1.8em;

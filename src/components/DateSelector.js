@@ -1,19 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { Badge } from "@material-ui/core";
 import "../styles/DatePicker.css";
 import MomentUtils from "@date-io/moment";
 import {
-  DatePicker,
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 
-const DateSelector = () => {
+const DateSelector = (props) => {
   const [selectedDate, setSelectedDate] = React.useState(
     moment().format("dddd, MMMM DD YYYY")
   );
@@ -26,7 +23,7 @@ const DateSelector = () => {
   console.log("Selected Date", selectedDate);
   return (
     <>
-      <DateSelectorWrapper>
+      <DateSelectorWrapper addReminder={props.addReminder}>
         <div className="month-select-container">
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
@@ -115,7 +112,7 @@ export default DateSelector;
 
 const DateSelectorWrapper = styled.div`
   .month-select-container {
-    margin-block-start: 20px;
+    margin-block-start: ${(props) => (props.addReminder ? 0 : 20)}px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -222,8 +219,10 @@ const DateSelectorWrapper = styled.div`
   }
 
   .MuiFormControl-root {
-    border: 1px solid var(--text-dark);
-    border-radius: 10px;
+    border: ${(props) =>
+      props.addReminder ? `none` : `1px solid var(--text-dark)`};
+    border-bottom: 1px solid var(--text-dark);
+    border-radius: ${(props) => (props.addReminder ? 0 : 10)}px;
     padding-inline-start: 10px;
   }
   .MuiFormControl-marginNormal {

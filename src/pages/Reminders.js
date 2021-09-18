@@ -4,11 +4,11 @@ import styled from "styled-components";
 import SearchInput from "../components/SearchInput";
 import HomeCard from "../components/HomeCard";
 import FilterBar from "../components/FilterBar";
-const Reminders = () => {
+const Reminders = (props) => {
   return (
     <section className="tab">
       <ReminderWrapper>
-        <Appbar />
+        <Appbar handleShowProfile={props.handleShowProfile} />
         <SearchInput placeholder="Search for a reminder..." />
         <FilterBar title="All Reminders" />
         <HomeCard />
