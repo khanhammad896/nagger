@@ -93,11 +93,10 @@ const HomeCardWrapper = styled.div`
     flex-direction: column;
   }
   .user-name {
-    font-size: 1.1em;
-    font-weight: 600;
+    font-size: 1.2em;
   }
   .message-text {
-    font-size: 0.8em;
+    font-size: 1em;
     opacity: 40%;
     font-weight: 600;
     overflow: hidden;
@@ -129,7 +128,7 @@ const HomeCardWrapper = styled.div`
   }
 
   .online-time {
-    font-size: 0.7em;
+    font-size: 0.8em;
     display: inline;
     white-space: nowrap;
   }
@@ -148,8 +147,9 @@ const HomeCardWrapper = styled.div`
   }
 
   .recipients-name-date {
-    font-size: 0.7em;
+    font-size: 0.9em;
     margin-left: 5px;
+    font-family: var(--font-regular);
   }
 
   .date-container {
@@ -158,6 +158,7 @@ const HomeCardWrapper = styled.div`
   }
 
   .recipients-date-container svg {
+    font-size: 1.3em;
     color: var(--background-theme);
   }
 
@@ -173,7 +174,7 @@ const HomeCardWrapper = styled.div`
     font-size: 1.5em;
   }
   @media screen and (max-width: 490px) {
-    padding: 10px 10px;
+    padding: 10px 15px;
 
     .card-content {
       padding-inline-start: 10px;
@@ -184,7 +185,7 @@ const HomeCardWrapper = styled.div`
     }
 
     .card-text {
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .online-status > div {

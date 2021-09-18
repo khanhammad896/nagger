@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import Appbar from "../components/Appbar";
 import DateDivider from "../components/DateDivider";
-import DatePicker from "../components/DateSelector";
+import DateSelector from "../components/DateSelector";
 import HomeCard from "../components/HomeCard";
 const Calendar = (props) => {
   return (
     <section className="tab">
       <CalendarWrapper>
         <Appbar handleShowProfile={props.handleShowProfile} />
-        <DatePicker />
+        <DateSelector />
         <div className="calendar-feed">
           <DateDivider
             date={`Fri Sep 17, 2021`}

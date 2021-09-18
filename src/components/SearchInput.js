@@ -1,20 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import Input from "@material-ui/core/Input";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
 import { FiSearch } from "react-icons/fi";
+import { Input } from "antd";
 const SearchInput = (props) => {
+  const [text, setText] = React.useState("");
   return (
     <>
       <SearchWrapper>
-        <Input
-          placeholder={props.placeholder}
-          endAdornment={
-            <InputAdornment>
-              <FiSearch />
-            </InputAdornment>
-          }
-        />
+        <div className="search-container">
+          <TextField
+            value={text}
+            type="text"
+            id="standard-basic"
+            placeholder={props.placeholder}
+            onChange={(e) => setText(e.target.value)}
+          />
+          <div className="search-icon-container">
+            <FiSearch />
+          </div>
+        </div>
       </SearchWrapper>
     </>
   );
@@ -28,42 +33,46 @@ const SearchWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  .MuiInputBase-root {
-    border: none;
+  .search-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     width: 100%;
-    background-color: #fff;
     height: 60px;
+    background-color: #fff;
     border-radius: 15px;
+    padding: 10px 20px;
   }
 
-  .MuiInputBase-input {
-    padding-inline: 20px;
-    color: var(--text-dark);
-    font-family: var(--font-regular);
+  .MuiFormControl-root {
+    width: 100%;
   }
+
   .MuiInput-underline:before,
   .MuiInput-underline:after,
   .MuiInput-underline:hover:not(.Mui-disabled):before {
     border: none;
   }
 
-  .MuiInputAdornment-root {
-    height: 39px;
-    width: 50px !important;
-    background-color: var(--tab-theme);
-    border-radius: 35%;
-    align-items: center;
-    justify-content: center;
-    max-height: unset;
-  }
-  .MuiInputAdornment-root > svg {
-    font-size: 1.2em;
-    color: #9ba3bb;
-  }
-  .MuiInputAdornment-positionStart {
-    margin-right: 15px;
+  .MuiInputBase-input {
+    font-family: var(--font-regular);
+    color: var(--text-dark);
   }
 
+  .search-icon-container {
+    width: 40px;
+    height: 36.33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--tab-theme);
+    border-radius: 35%;
+  }
+
+  .search-icon-container svg {
+    font-size: 1.5em;
+    color: #939cb5;
+  }
   @media screen and (max-width: 400px) {
     .MuiInputBase-root {
       height: 55px;

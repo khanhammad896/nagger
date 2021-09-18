@@ -4,7 +4,12 @@ import styled from "styled-components";
 import SearchInput from "../components/SearchInput";
 import HomeCard from "../components/HomeCard";
 import FilterBar from "../components/FilterBar";
+import TextField from "@material-ui/core/TextField";
+import { FiSearch } from "react-icons/fi";
+
 const Reminders = (props) => {
+  const [text, setText] = React.useState("");
+
   return (
     <section className="tab">
       <ReminderWrapper>

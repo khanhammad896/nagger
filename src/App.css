@@ -32,10 +32,9 @@
   width: 100%;
   padding-inline: 4%;
   background-color: var(--tab-theme);
-  flex-grow: 1;
+  height: 100%;
   border-radius: 0 0 50px 50px;
-  /* overflow: auto; */
-  overflow: hidden;
+  overflow: auto;
 }
 
 .tab-stack {

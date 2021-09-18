@@ -40,14 +40,15 @@ const Routes = () => {
   const hideAddContact = () => {
     setShowAddContact(false);
   };
-  useEffect(() => {
-    function handleResize() {
-      setHeight(window.innerHeight);
-    }
-    window.addEventListener("resize", handleResize);
-  }, []);
 
-  console.log("Show Profile", showProfile);
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setHeight(window.innerHeight);
+  //   }
+  //   window.addEventListener("resize", handleResize);
+  // }, []);
+
+  console.log("Height", height);
   console.log("Show Add Reminder", showAddReminder);
 
   const routes = () => {

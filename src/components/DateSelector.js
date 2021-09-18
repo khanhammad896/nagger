@@ -14,13 +14,36 @@ const DateSelector = (props) => {
   const [selectedDate, setSelectedDate] = React.useState(
     moment().format("dddd, MMMM DD YYYY")
   );
+  const [weekdays, setWeekDays] = React.useState([]);
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const updateWeek = () => {
+    const week = [];
+
+    for (var i = 0; i < 8; i++) {
+      const day = moment(selectedDate)
+        .add(i, "days")
+        .format("dddd MMM DD")
+        .split(" ");
+      const dateObj = {
+        day: day[0],
+        month: day[1],
+        date: day[2],
+      };
+      week.push(dateObj);
+    }
+    return week;
   };
 
-  const now = moment();
-  console.log("Selected Date", selectedDate);
+  const handleDateChange = (date) => {
+    setSelectedDate(date.format("dddd, MMM DD YYYY"));
+    setWeekDays(updateWeek());
+  };
+
+  React.useEffect(() => {
+    setWeekDays(updateWeek());
+  }, []);
+
+  console.log("Week days", weekdays);
   return (
     <>
       <DateSelectorWrapper addReminder={props.addReminder}>
@@ -34,6 +57,7 @@ const DateSelector = (props) => {
               id="date-picker-inline"
               value={selectedDate}
               onChange={handleDateChange}
+              onClose={() => setWeekDays(updateWeek())}
               KeyboardButtonProps={{
                 "aria-label": "change date",
               }}
@@ -42,48 +66,14 @@ const DateSelector = (props) => {
         </div>
         <div className="month-date-container">
           <div className="date-card-wrapper">
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
-            <div className="date-card-selected">
-              <Badge className="date-dot-selected" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
-            <div className="date-card">
-              <Badge className="date-dot" />
-              <span className="date-card-day">Monday</span>
-              <span className="date-card-date">14</span>
-              <span className="date-card-month">June</span>
-            </div>
+            {weekdays.map((weekday) => (
+              <div className="date-card">
+                <Badge className="date-dot" />
+                <span className="date-card-day">{weekday.day}</span>
+                <span className="date-card-date">{weekday.date}</span>
+                <span className="date-card-month">{weekday.month}</span>
+              </div>
+            ))}
           </div>
         </div>
       </DateSelectorWrapper>
@@ -210,7 +200,6 @@ const DateSelectorWrapper = styled.div`
   .MuiInputBase-input {
     font-family: var(--font-regular);
     font-size: 1.4em;
-    pointer-events: none;
   }
   .MuiIconButton-label {
     color: var(--text-dark);
