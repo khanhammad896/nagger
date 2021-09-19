@@ -169,7 +169,7 @@ const LoginWrapper = styled.div`
     color: #4a619f;
   }
 
-  .sign-up-link,
+  .sign-up-link a,
   .terms-text {
     color: var(--tab-theme);
     font-size: 1.2em;
