@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Route, useLocation, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import Home from "../pages/Home";
@@ -9,12 +9,14 @@ import Calendar from "../pages/Calendar";
 import Profile from "../pages/Profile";
 import AddReminder from "../pages/AddReminder";
 import AddContact from "../pages/AddContact";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 const Routes = () => {
   const [height, setHeight] = useState(window.innerHeight);
   const [showProfile, setShowProfile] = useState(false);
   const [showAddReminder, setShowAddReminder] = useState(false);
   const [showAddContact, setShowAddContact] = useState(false);
-
+  const isLogin = true;
   const location = useLocation();
 
   const handleShowProfile = () => {
@@ -56,11 +58,18 @@ const Routes = () => {
       return (
         <>
           <Switch>
-            <Route
+            {/* <Route
               exact
               path="/"
               component={() => <Home handleShowProfile={handleShowProfile} />}
-            />
+            /> */}
+            <Route exact path="/">
+              {isLogin ? (
+                <Home handleShowProfile={handleShowProfile} />
+              ) : (
+                <Redirect to="/login" />
+              )}
+            </Route>
             <Route
               path="/reminders"
               component={() => (
@@ -79,11 +88,15 @@ const Routes = () => {
                 <Calendar handleShowProfile={handleShowProfile} />
               )}
             />
+            <Route path="/login" component={() => <Login />} />
+            <Route path="/signup" component={() => <SignUp />} />
           </Switch>
-          <Navbar
-            handleShowAddReminder={handleShowAddReminder}
-            handleShowAddContact={handleShowAddContact}
-          />
+          {location.pathname !== "/login" && location.pathname !== "/signup" ? (
+            <Navbar
+              handleShowAddReminder={handleShowAddReminder}
+              handleShowAddContact={handleShowAddContact}
+            />
+          ) : null}
         </>
       );
     }
