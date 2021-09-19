@@ -7,8 +7,7 @@ import { FaFacebook } from "react-icons/fa";
 import Slide from "@material-ui/core/Slide";
 import { Link, useHistory } from "react-router-dom";
 
-const Login = () => {
-  const [signIn, setSignIn] = React.useState(false);
+const Login = (props) => {
   const history = useHistory();
   return (
     <>
@@ -54,12 +53,19 @@ const Login = () => {
             </div>
           </div>
           <div className="login-input-container">
-            <span className="sign-up-link" onClick={() => setSignIn(true)}>
+            <span className="sign-up-link">
               <Link to="/signup">Actually, I'm new... sign me up.</Link>
             </span>
           </div>
           <div className="login-input-container continue-button">
-            <Button onClick={() => history.push("/")}>Continue</Button>
+            <Button
+              onClick={() => {
+                props.setIsLogin(true);
+                history.push("/");
+              }}
+            >
+              Continue
+            </Button>
           </div>
           <div className="login-input-container">
             <span className="terms-text">

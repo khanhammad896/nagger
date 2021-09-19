@@ -16,7 +16,7 @@ const Routes = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [showAddReminder, setShowAddReminder] = useState(false);
   const [showAddContact, setShowAddContact] = useState(false);
-  const isLogin = true;
+  const [isLogin, setIsLogin] = React.useState(false);
   const location = useLocation();
 
   const handleShowProfile = () => {
@@ -88,7 +88,10 @@ const Routes = () => {
                 <Calendar handleShowProfile={handleShowProfile} />
               )}
             />
-            <Route path="/login" component={() => <Login />} />
+            <Route
+              path="/login"
+              component={() => <Login setIsLogin={setIsLogin} />}
+            />
             <Route path="/signup" component={() => <SignUp />} />
           </Switch>
           {location.pathname !== "/login" && location.pathname !== "/signup" ? (
