@@ -5,10 +5,11 @@ import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import Slide from "@material-ui/core/Slide";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const Login = () => {
   const [signIn, setSignIn] = React.useState(false);
+  const history = useHistory();
   return (
     <>
       <LoginWrapper>
@@ -58,7 +59,7 @@ const Login = () => {
             </span>
           </div>
           <div className="login-input-container continue-button">
-            <Button>Continue</Button>
+            <Button onClick={() => history.push("/")}>Continue</Button>
           </div>
           <div className="login-input-container">
             <span className="terms-text">
