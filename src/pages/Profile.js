@@ -1,15 +1,12 @@
 import React from "react";
 import SecondaryAppBar from "../components/SecondaryAppBar";
 import styled from "styled-components";
-import { Avatar } from "antd";
-import profile from "../assets/img2.jpg";
-import { IoCameraOutline } from "react-icons/io5";
-import TextField from "@material-ui/core/TextField";
 import Switch from "@material-ui/core/Switch";
 import { GoTrashcan } from "react-icons/go";
+import TextInput from "../components/TextInput";
+import AvatarWrapper from "../components/AvatarWrapper";
 
 const Profile = (props) => {
-  const isImage = true;
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: true,
@@ -38,26 +35,7 @@ const Profile = (props) => {
         <SecondaryAppBar backText={`Profile`} hideProfile={props.hideProfile} />
         <section className="tab-stack">
           <div className="profile-feed">
-            <div className="display-container">
-              {!isImage ? (
-                <div className="after">
-                  <label
-                    htmlFor="image-input"
-                    className="image-input-label font-regular text-light"
-                  >
-                    <IoCameraOutline />
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    id="image-input"
-                    style={{ width: 0.0001, height: 0.0001 }}
-                  />
-                </div>
-              ) : (
-                <Avatar alt="user-image" src={profile} />
-              )}
-            </div>
+            <AvatarWrapper />
             <div className="profile-greetings">
               <span className="font-regular text-dark">Welcome back,</span>
               <span className="profile-name font-regular text-dark">
@@ -68,22 +46,24 @@ const Profile = (props) => {
               <span className="contact-info-heading font-regular text-dark">
                 My Contact Info
               </span>
-              <TextField
-                id="outlined-search"
-                label="Phone"
-                type="text"
-                variant="outlined"
-                className="primary-inputs"
-              />
-              <TextField
-                id="outlined-search"
-                label="Email"
-                type="text"
-                variant="outlined"
-                className="primary-inputs"
-              />
+              <div className="profile-input-container">
+                <TextInput
+                  placeholder="Phone"
+                  placeholderColor="dark"
+                  border="dark"
+                  inputColor="dark"
+                />
+              </div>
+              <div className="profile-input-container">
+                <TextInput
+                  placeholder="Email"
+                  placeholderColor="dark"
+                  border="dark"
+                  inputColor="dark"
+                />
+              </div>
             </div>
-            <div className="setting-info-container">
+            {/* <div className="setting-info-container">
               <span className="setting-info-heading font-regular text-dark">
                 Settings
               </span>
@@ -126,7 +106,7 @@ const Profile = (props) => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="delete-container">
               <span className="delete-text">Delete Account</span>
               <span>
@@ -158,43 +138,6 @@ const ProfileWrapper = styled.div`
     align-items: center;
     flex-direction: column;
   }
-  .display-container {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    margin-block: 20px;
-    position: relative;
-    background-color: var(--background-theme);
-  }
-  .after {
-    position: absolute;
-    top: 0;
-    width: inherit;
-    height: inherit;
-    background-color: rgba(255, 255, 255, 0.3);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .image-input-label {
-    display: flex;
-    justif-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
-  }
-  .image-input-label svg {
-    font-size: 6em;
-  }
-
-  .ant-avatar {
-    width: inherit;
-    height: inherit;
-    border: 3px solid #fff;
-    box-shadow: 0px 0px 10px 0px #a8a6a6;
-  }
 
   .profile-greetings {
     display: flex;
@@ -215,6 +158,7 @@ const ProfileWrapper = styled.div`
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    flex-grow: 1;
   }
   .setting-info-container {
     margin: 0;
@@ -223,6 +167,12 @@ const ProfileWrapper = styled.div`
   .setting-info-heading {
     font-size: 1.8em;
   }
+
+  .profile-input-container {
+    width: 100%;
+    margin-block: 20px;
+  }
+
   .primary-inputs {
     margin-block-start: 20px;
   }

@@ -3,19 +3,21 @@ import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
 import { FiSearch } from "react-icons/fi";
 import { Input } from "antd";
+import TextInput from "./TextInput";
 const SearchInput = (props) => {
   const [text, setText] = React.useState("");
   return (
     <>
       <SearchWrapper>
         <div className="search-container">
-          <TextField
+          {/* <TextField
             value={text}
             type="text"
             id="standard-basic"
             placeholder={props.placeholder}
             onChange={(e) => setText(e.target.value)}
-          />
+          /> */}
+          <TextInput inputColor="dark" placeholder={props.placeholder} />
           <div className="search-icon-container">
             <FiSearch />
           </div>
@@ -41,7 +43,7 @@ const SearchWrapper = styled.div`
     height: 60px;
     background-color: #fff;
     border-radius: 15px;
-    padding: 10px 20px;
+    padding: 10px 20px 10px 0px;
   }
 
   .MuiFormControl-root {

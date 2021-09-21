@@ -26,7 +26,13 @@
 * {
   box-sizing: border-box;
 }
+*::-webkit-scrollbar {
+  display: none;
+}
 
+body {
+  background-color: var(--background-theme);
+}
 .tab,
 .tab-stack {
   width: 100%;

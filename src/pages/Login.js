@@ -1,77 +1,80 @@
-import { TextField } from "@material-ui/core";
-import { Button, Input } from "antd";
+import { Button } from "antd";
 import React from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
-import Slide from "@material-ui/core/Slide";
 import { Link, useHistory } from "react-router-dom";
-
+import TextInput from "../components/TextInput";
 const Login = (props) => {
   const history = useHistory();
   return (
     <>
-      <LoginWrapper>
+      <LoginWrapper height={props.height}>
         <div className="login-primary-container">
-          <div className="login-intro-greetings-container">
-            <span className="font-regular">
-              First thing's first -- let's get you signed in.
-            </span>
-          </div>
-          <div className="login-input-container">
-            <Input
-              bordered={false}
-              placeholder="Username"
-              className="login-username-inputs"
-            />
-          </div>
-          <div className="login-input-container">
-            <Input.Password
-              bordered={false}
-              placeholder="Password"
-              className="login-password-inputs"
-            />
-          </div>
-          <div className="login-input-container">
-            <div className="apps-login-button">
-              <span className="apps-icon">
-                <FcGoogle />
-              </span>
-              <span className="apps-login-text font-light text-dark">
-                Sign in with google
+          <div>
+            <div className="login-intro-greetings-container">
+              <span className="font-regular">
+                First thing's first -- let's get you signed in.
               </span>
             </div>
-          </div>
-          <div className="login-input-container facebook">
-            <div className="apps-login-button">
-              <span className="apps-icon facebook-icon">
-                <FaFacebook />
-              </span>
-              <span className="apps-login-text font-light text-dark">
-                Login with facebook
+            <div className="login-input-container">
+              <TextInput
+                placeholder="Username"
+                border="light"
+                inputColor="light"
+                placeholderColor="light"
+              />
+            </div>
+            <div className="login-input-container">
+              <TextInput
+                password={true}
+                placeholder="Password"
+                border="light"
+                inputColor="light"
+                placeholderColor="light"
+              />
+            </div>
+            <div className="login-input-container">
+              <div className="apps-login-button">
+                <span className="apps-icon">
+                  <FcGoogle />
+                </span>
+                <span className="apps-login-text font-light text-dark">
+                  Sign in with google
+                </span>
+              </div>
+            </div>
+            <div className="login-input-container facebook">
+              <div className="apps-login-button">
+                <span className="apps-icon facebook-icon">
+                  <FaFacebook />
+                </span>
+                <span className="apps-login-text font-light text-dark">
+                  Login with facebook
+                </span>
+              </div>
+            </div>
+            <div className="login-input-container">
+              <span className="sign-up-link">
+                <Link to="/signup">Actually, I'm new... sign me up.</Link>
               </span>
             </div>
-          </div>
-          <div className="login-input-container">
-            <span className="sign-up-link">
-              <Link to="/signup">Actually, I'm new... sign me up.</Link>
-            </span>
-          </div>
-          <div className="login-input-container continue-button">
-            <Button
-              onClick={() => {
-                props.setIsLogin(true);
-                history.push("/");
-              }}
-            >
-              Continue
-            </Button>
-          </div>
-          <div className="login-input-container">
-            <span className="terms-text">
-              By continuing, you agree to our terms & conditions and privacy
-              policy.
-            </span>
+            <div className="login-input-container continue-button">
+              <Button
+                onClick={() => {
+                  props.setIsLogin(true);
+                  history.push("/");
+                }}
+              >
+                Continue
+              </Button>
+            </div>
+            <div className="login-input-container">
+              <span className="terms-text">
+                By continuing, you agree to our terms & conditions and privacy
+                policy.
+              </span>
+            </div>
           </div>
         </div>
       </LoginWrapper>
@@ -83,12 +86,20 @@ export default Login;
 
 const LoginWrapper = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2%;
+  padding: 0 2%;
   .login-primary-container {
+    width: 100%;
+    height: ${(props) => props.height}px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .login-primary-container > div {
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -110,40 +121,12 @@ const LoginWrapper = styled.div`
   }
 
   .login-input-container {
-    width: inherit;
+    width: 80%;
     margin-block: 20px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .login-username-inputs,
-  .login-password-inputs {
-    width: 80%;
-    border-bottom: 2px solid var(--tab-theme);
-    padding: 5px 10px;
-  }
-
-  .ant-input {
-    font-size: 1.3em;
-    font-family: var(--font-light);
-    color: var(--tab-theme);
-  }
-
-  .ant-input::placeholder {
-    font-size: 1em;
-    font-family: var(--font-light);
-    color: rgba(255, 255, 255, 0.5) !important;
-  }
-
-  .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
-    border-color: var(--tab-theme);
-  }
-
-  .ant-input-suffix svg {
-    color: var(--tab-theme);
-    font-size: 1.5em;
   }
 
   .apps-login-button {
@@ -168,12 +151,13 @@ const LoginWrapper = styled.div`
     font-size: 1.5em;
     margin-inline: 10px;
   }
-  .facebook,
-  .continue-button {
-    margin-block: 0;
-  }
+
   .facebook-icon {
     color: #4a619f;
+  }
+
+  .continue-button {
+    width: 100%;
   }
 
   .sign-up-link a,
@@ -223,6 +207,37 @@ const LoginWrapper = styled.div`
     .ant-btn {
       height: 55px;
       font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    .login-intro-greetings-container {
+      font-size: 10px;
+    }
+    .ant-input {
+      font-size: 1em;
+    }
+    .ant-input-suffix {
+      font-size: 10px;
+    }
+    .apps-login-button {
+      font-size: 10px;
+      height: 50px;
+      margin-block: 5px;
+    }
+    .sign-up-link {
+      font-size: 0.8em;
+    }
+
+    .ant-btn {
+      height: 45px;
+      font-size: 10px;
+    }
+  }
+
+  @media screen and (min-height: 750px) {
+    .login-primary-container {
+      justify-content: center;
     }
   }
 `;

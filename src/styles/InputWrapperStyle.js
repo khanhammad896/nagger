@@ -2,10 +2,19 @@ export const InputWrapperStyle = `
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-direction: column;
   align-items: center;
-  padding: 2%;
+  // padding: 0 2%;
   .login-primary-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    overflow: auto;
+  }
+  .login-primary-container > div {
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -26,8 +35,8 @@ export const InputWrapperStyle = `
     font-size: 1.9em;
   }
 
-  .login-input-container {
-    width: inherit;
+  .login-input-container, .go-back {
+    width: 80%;
     margin-block: 20px;
     text-align: center;
     display: flex;
@@ -35,33 +44,15 @@ export const InputWrapperStyle = `
     align-items: center;
   }
 
-  .login-username-inputs,
-  .login-password-inputs {
-    width: 80%;
-    border-bottom: 2px solid var(--tab-theme);
-    padding: 5px 10px;
-  }
+  
 
-  .ant-input {
-    font-size: 1.3em;
-    font-family: var(--font-light);
-    color: var(--tab-theme);
-  }
+  
 
-  .ant-input::placeholder {
-    font-size: 1em;
-    font-family: var(--font-light);
-    color: rgba(255, 255, 255, 0.5) !important;
-  }
+  
 
-  .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover {
-    border-color: var(--tab-theme);
-  }
+  
 
-  .ant-input-suffix svg {
-    color: var(--tab-theme);
-    font-size: 1.5em;
-  }
+  
 
   .apps-login-button {
     width: 80%;
@@ -121,8 +112,24 @@ export const InputWrapperStyle = `
     background-color: var(--tab-theme);
   }
 
-  
+  .go-back{
+    margin:0;
 
+  }
+  .go-back > span{
+    font-family: var(--font-light);
+    color: var(--tab-theme);
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: color 0.1s linear;
+  }
+  .go-back:hover span{
+    color: #8884dc;
+  }
+  .continue-button{
+    width: 100%;
+  }
+  
   @media screen and (max-width: 400px) {
     .login-intro-greetings-container {
       font-size: 12px;
@@ -142,4 +149,29 @@ export const InputWrapperStyle = `
       height: 55px;
       font-size: 12px;
     }
-  }`;
+  }
+  @media screen and (max-width: 320px) {
+    .login-intro-greetings-container {
+      font-size: 10px;
+    }
+    .ant-input {
+      font-size: 1em;
+    }
+    .ant-input-suffix {
+      font-size: 10px;
+    }
+
+    .sign-up-link {
+      font-size: 0.8em;
+    }
+
+    .ant-btn {
+      height: 50px;
+      font-size: 10px;
+    }
+  }
+  
+  @media screen and (min-height: 660px) {
+      justify-content: center;
+  }
+  `;

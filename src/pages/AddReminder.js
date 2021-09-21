@@ -26,6 +26,16 @@ const names = [
   "Virginia Andrews",
   "Kelly Snyder",
 ];
+const intervalList = [
+  "Every 1 minute",
+  "Every 5 minutes",
+  "Every 30 minutes",
+  "Every 1 hour",
+  "Every day",
+  "Every week",
+  "Every month",
+  "Every year",
+];
 
 const { TextArea } = Input;
 
@@ -127,37 +137,25 @@ const AddReminder = (props) => {
                 </MuiPickersUtilsProvider>
               </div>
               <div className="nag-interval-data-containers underline">
-                <MaterialSelect
+                <Select
                   className="period-select"
                   value={period}
                   onChange={handlePeriod}
+                  bordered={false}
                 >
-                  <MenuItem>By Hour</MenuItem>
-                  <MenuItem>By Day</MenuItem>
-                  <MenuItem>By Months</MenuItem>
-                </MaterialSelect>
+                  {intervalList.map((interval) => (
+                    <Select.Option
+                      className="interval-options"
+                      key={intervalList.indexOf(interval)}
+                      value={interval}
+                    >
+                      {interval}
+                    </Select.Option>
+                  ))}
+                </Select>
                 <span className="period-icon text-dark">
                   <IoNotificationsOutline />
                 </span>
-              </div>
-              <div className="nag-interval-data-containers">
-                <div className="nag-methods">
-                  <span className="contacts-list-label font-regular text-dark">
-                    by
-                  </span>
-                  <div className="contacts-select-container">
-                    <Select
-                      mode="multiple"
-                      allowClear
-                      onChange={handleChange}
-                      bordered={false}
-                    >
-                      <Select.Option value="Text">Text</Select.Option>
-                      <Select.Option value="Push">Push</Select.Option>
-                      <Select.Option value="Email">Email</Select.Option>
-                    </Select>
-                  </div>
-                </div>
               </div>
               <div className="nag-button-container">
                 <Button variant="contained" color="primary">
@@ -313,10 +311,20 @@ const AddReminderWrapper = styled.div`
   .MuiInput-underline:hover:not(.Mui-disabled):before {
     border: none;
   }
-  // .period-select {
-  //   border-bottom: 1px solid var(--text-dark);
-  // }
 
+  .period-select .ant-select-selector,
+  .period-select .ant-select-selection-item {
+    background-color: transparent;
+    font-family: var(--font-light);
+    color: var(--text-dark);
+    font-size: 1.3em;
+    padding: 0;
+    margin-block-start: 15px;
+  }
+
+  .period-select {
+    border-bottom: none;
+  }
   .period-select svg {
     display: none;
   }

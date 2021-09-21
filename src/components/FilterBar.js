@@ -16,9 +16,9 @@ const FilterBar = (props) => {
             <AiOutlineCloudDownload />
           </div>
         ) : null}
-        <div className="filter-bar-icon">
+        {/* <div className="filter-bar-icon">
           <GoSettings />
-        </div>
+        </div> */}
       </FilterBarWrapper>
     </>
   );

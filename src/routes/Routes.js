@@ -90,9 +90,14 @@ const Routes = () => {
             />
             <Route
               path="/login"
-              component={() => <Login setIsLogin={setIsLogin} />}
+              component={() => (
+                <Login height={height} setIsLogin={setIsLogin} />
+              )}
             />
-            <Route path="/signup" component={() => <SignUp />} />
+            <Route
+              path="/signup"
+              component={() => <SignUp height={height} />}
+            />
           </Switch>
           {location.pathname !== "/login" && location.pathname !== "/signup" ? (
             <Navbar
