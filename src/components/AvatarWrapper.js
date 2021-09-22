@@ -1,15 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { Avatar } from "antd";
-import profile from "../assets/img2.jpg";
 import styled from "styled-components";
-const AvatarWrapper = () => {
-  const isImage = false;
-
+const AvatarWrapper = (props) => {
+  const [imageURL, setImageURL] = useState(props.imageURL);
   return (
     <AvatarContainer>
       <div className="display-container">
-        {!isImage ? (
+        {imageURL === null ? (
           <div className="after">
             <label
               htmlFor="image-input"
@@ -22,10 +20,13 @@ const AvatarWrapper = () => {
               accept="image/*"
               id="image-input"
               style={{ width: 0.0001, height: 0.0001 }}
+              onChange={(e) => {
+                setImageURL(props.handleImage(e.target.files));
+              }}
             />
           </div>
         ) : (
-          <Avatar alt="user-image" src={profile} />
+          <Avatar alt="user-image" src={imageURL} />
         )}
       </div>
     </AvatarContainer>

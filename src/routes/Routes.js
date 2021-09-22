@@ -11,14 +11,14 @@ import AddReminder from "../pages/AddReminder";
 import AddContact from "../pages/AddContact";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import { connect, useSelector } from "react-redux";
 const Routes = () => {
   const [height, setHeight] = useState(window.innerHeight);
   const [showProfile, setShowProfile] = useState(false);
   const [showAddReminder, setShowAddReminder] = useState(false);
   const [showAddContact, setShowAddContact] = useState(false);
-  const [isLogin, setIsLogin] = React.useState(false);
   const location = useLocation();
-
+  const isLogin = useSelector((state) => state.login.isLogin);
   const handleShowProfile = () => {
     setShowProfile(true);
   };
@@ -88,16 +88,12 @@ const Routes = () => {
                 <Calendar handleShowProfile={handleShowProfile} />
               )}
             />
-            <Route
-              path="/login"
-              component={() => (
-                <Login height={height} setIsLogin={setIsLogin} />
-              )}
-            />
-            <Route
-              path="/signup"
-              component={() => <SignUp height={height} />}
-            />
+            <Route path="/login">
+              {!isLogin ? <Login height={height} /> : <Redirect to="/" />}
+            </Route>
+            <Route path="/signup">
+              {!isLogin ? <SignUp height={height} /> : <Redirect to="/" />}
+            </Route>
           </Switch>
           {location.pathname !== "/login" && location.pathname !== "/signup" ? (
             <Navbar
@@ -134,7 +130,7 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export default connect()(Routes);
 
 const MainWrapper = styled.div`
   width: 100%;

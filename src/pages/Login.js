@@ -1,12 +1,47 @@
 import { Button } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
 import TextInput from "../components/TextInput";
+import axios from "axios";
+import { connect, useDispatch } from "react-redux";
+import { login } from "../redux/reducers/Login/login.actions";
+import { setUser } from "../redux/reducers/User/user.actions";
+import cogoToast from "cogo-toast";
 const Login = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const [loginInformation, setLoginInformation] = useState({
+    email: null,
+    password: null,
+  });
+  const setEmail = (value) => {
+    setLoginInformation({ ...loginInformation, email: value });
+  };
+  const setPassword = (value) => {
+    setLoginInformation({ ...loginInformation, password: value });
+  };
+  const handleLogin = async () => {
+    await axios({
+      method: "post",
+      url: "https://naggerapp.herokuapp.com/user/login",
+      headers: { "Content-Type": "application/json" },
+      data: JSON.stringify({
+        email: loginInformation.email,
+        password: loginInformation.password,
+      }),
+    })
+      .then((response) => {
+        dispatch(setUser(response.data.data));
+        dispatch(login());
+        cogoToast.success("Signed in successfully");
+        history.push("/");
+      })
+      .catch((error) => cogoToast.error(error.response.data.errorMessage));
+  };
+  console.log("Login Information >> ", loginInformation);
   return (
     <>
       <LoginWrapper height={props.height}>
@@ -19,10 +54,11 @@ const Login = (props) => {
             </div>
             <div className="login-input-container">
               <TextInput
-                placeholder="Username"
+                placeholder="Email"
                 border="light"
                 inputColor="light"
                 placeholderColor="light"
+                setField={setEmail}
               />
             </div>
             <div className="login-input-container">
@@ -32,6 +68,7 @@ const Login = (props) => {
                 border="light"
                 inputColor="light"
                 placeholderColor="light"
+                setField={setPassword}
               />
             </div>
             <div className="login-input-container">
@@ -62,8 +99,7 @@ const Login = (props) => {
             <div className="login-input-container continue-button">
               <Button
                 onClick={() => {
-                  props.setIsLogin(true);
-                  history.push("/");
+                  handleLogin();
                 }}
               >
                 Continue
@@ -82,7 +118,7 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default connect()(Login);
 
 const LoginWrapper = styled.div`
   width: 100%;
@@ -185,7 +221,7 @@ const LoginWrapper = styled.div`
     color: var(--background-theme);
   }
 
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 450px) {
     .login-intro-greetings-container {
       font-size: 12px;
     }

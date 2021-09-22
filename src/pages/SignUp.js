@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import InputWrapper from "../components/InputWrapper";
 import Slide from "@material-ui/core/Slide";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import cogoToast from "cogo-toast";
+
 const SignUp = (props) => {
+  const history = useHistory();
   const [checked, setChecked] = useState(true);
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -16,6 +21,43 @@ const SignUp = (props) => {
     phoneError: null,
     emailError: null,
   });
+  const [imageURL, setImageURL] = useState(null);
+  const [signupInformation, setSignUpInformation] = useState({
+    fullname: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    email: "",
+    profilePicture: null,
+  });
+  // GENERATING URL FOR IMAGE PREVIEW
+  const preview = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => setImageURL(reader.result);
+    reader.onerror = (error) => console.log("Image error", error);
+  };
+
+  const handleImage = (value) => {
+    const files = value;
+    if (
+      files[0].type === "image/png" ||
+      files[0].type === "image/jpeg" ||
+      files[0].type === "image/jpg"
+    ) {
+      files[0] &&
+        setSignUpInformation({
+          ...signupInformation,
+          profilePicture: files[0],
+        });
+      preview(files[0]);
+      return imageURL;
+    } else {
+      cogoToast.error("Invalid file format");
+    }
+  };
+
   const slide1 = () => {
     setReverse(false);
     setChecked(false);
@@ -47,69 +89,32 @@ const SignUp = (props) => {
     setChecked3(true);
   };
 
-  const [signupInformation, setSignUpInformation] = useState({
-    fullname: "",
-    username: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
-    email: "",
-    profilePicture: "",
-  });
-
-  const validateNames = () => {
-    if (signupInformation.fullname.length === 0) {
-      return setErrors({ ...errors, fullNameError: "Name is required" });
-    }
-    if (signupInformation.fullname.length < 3) {
-      return setErrors({
-        ...errors,
-        fullNameError: "Name must be 3 letters or more",
-      });
-    }
-    if (signupInformation.fullname.length > 20) {
-      return setErrors({
-        ...errors,
-        fullNameError: "Name must be 20 letters or more",
-      });
-    }
-    return setErrors({ ...errors, fullNameError: null });
+  const signup = async () => {
+    await axios({
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      url: "https://naggerapp.herokuapp.com/user/signup",
+      data: JSON.stringify({
+        username: signupInformation.username,
+        password: signupInformation.password,
+        phone: signupInformation.phone,
+        email: signupInformation.email,
+        nick_name: signupInformation.fullname,
+        profilePicture: signupInformation.profilePicture,
+      }),
+    })
+      .then((data) => {
+        if (data.data.ResponseCode === "Success") {
+          cogoToast.success("Signed up successfully");
+          history.push("/login");
+          console.log("Response > ", data);
+        }
+      })
+      .catch((error) => cogoToast.error(error.response.data.errorMessage));
   };
 
-  const setFullname = (value) => {
-    setSignUpInformation({ ...signupInformation, fullname: value });
-  };
-
-  const setUserName = (value) => {
-    setSignUpInformation({ ...signupInformation, username: value });
-  };
-  const setPassword = (value) => {
-    setSignUpInformation({ ...signupInformation, password: value });
-  };
-  const setConfirmPassword = (value) => {
-    setSignUpInformation({
-      ...signupInformation,
-      confirmPassword: value,
-    });
-  };
-  const setPhone = (value) => {
-    setSignUpInformation({ ...signupInformation, phone: value });
-  };
-  const setEmail = (value) => {
-    setSignUpInformation({ ...signupInformation, email: value });
-  };
-  const setProfilePicture = (value) => {
-    setSignUpInformation({
-      ...signupInformation,
-      profilePicture: value,
-    });
-  };
-
-  console.log("Errors >>> ", errors);
-
-  useEffect(() => {
-    validateNames();
-  }, [signupInformation]);
+  console.log("Sign up information", signupInformation);
+  console.log("Image URL >> ", imageURL);
   return (
     <SignUpWrapper>
       {checked ? (
@@ -131,11 +136,14 @@ const SignUp = (props) => {
               slide={slide1}
               tab_no={0}
               height={props.height}
-              setFullname={setFullname}
-              setUserName={setUserName}
+              setFullname={(value) =>
+                setSignUpInformation({ ...signupInformation, fullname: value })
+              }
+              setUserName={(value) => {
+                setSignUpInformation({ ...signupInformation, username: value });
+              }}
               fullname={signupInformation.fullname}
               username={signupInformation.username}
-              validateNames={validateNames}
             />
           </div>
         </Slide>
@@ -156,8 +164,15 @@ const SignUp = (props) => {
               tab_no={1}
               height={props.height}
               back={back1}
-              setPassword={setPassword}
-              setConfirmPassword={setConfirmPassword}
+              setPassword={(value) => {
+                setSignUpInformation({ ...signupInformation, password: value });
+              }}
+              setConfirmPassword={(value) => {
+                setSignUpInformation({
+                  ...signupInformation,
+                  confirmPassword: value,
+                });
+              }}
               password={signupInformation.password}
               confirmPassword={signupInformation.confirmPassword}
             />
@@ -180,8 +195,12 @@ const SignUp = (props) => {
               height={props.height}
               back={back2}
               slide={slide3}
-              setPhone={setPhone}
-              setEmail={setEmail}
+              setPhone={(value) => {
+                setSignUpInformation({ ...signupInformation, phone: value });
+              }}
+              setEmail={(value) => {
+                setSignUpInformation({ ...signupInformation, email: value });
+              }}
               phone={signupInformation.phone}
               email={signupInformation.email}
             />
@@ -201,6 +220,9 @@ const SignUp = (props) => {
               height={props.height}
               back={back3}
               greet_text="May be you want to share your profile picture here"
+              signup={signup}
+              handleImage={handleImage}
+              imageURL={imageURL}
             />
           </div>
         </Slide>

@@ -1,13 +1,23 @@
 import { LOGIN, LOGOUT } from "./login.types";
 
-const login = () => {
+export const login = () => {
   return {
     type: LOGIN,
+    payload: {
+      login: () => {
+        localStorage.setItem("isLogin", "true");
+      },
+    },
   };
 };
 
-const logout = () => {
+export const logout = () => {
   return {
     type: LOGOUT,
+    payload: {
+      login: () => {
+        localStorage.setItem("isLogin", "false");
+      },
+    },
   };
 };

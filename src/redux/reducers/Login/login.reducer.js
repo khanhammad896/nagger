@@ -1,7 +1,12 @@
 import { LOGIN, LOGOUT } from "./login.types";
 
 const initialState = {
-  isLogin: false,
+  isLogin:
+    localStorage.getItem("isLogin") === "false" ||
+    localStorage.getItem("isLogin") === null
+      ? false
+      : true,
+  login: null,
 };
 
 const loginReducer = (state = initialState, actions) => {
@@ -10,11 +15,13 @@ const loginReducer = (state = initialState, actions) => {
       return {
         ...state,
         isLogin: true,
+        login: actions.payload.login(),
       };
     case LOGOUT:
       return {
         ...state,
-        isLogout: false,
+        isLogin: false,
+        login: actions.payload.login(),
       };
     default:
       return state;

@@ -1,0 +1,25 @@
+.ant-dropdown-menu {
+  width: 150px;
+  border-radius: 15px;
+  font-family: var(--font-light);
+  color: var(--text-dark);
+}
+
+.ant-dropdown-menu-title-content {
+  text-align: center;
+  font-size: 1.1em;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  transition: background-color 0.3s ease-in, color 0.3s ease-in;
+  border-radius: 12px;
+}
+.ant-dropdown-menu-title-content:hover {
+  background-color: var(--background-theme);
+  color: var(--tab-theme);
+}
+.ant-dropdown-menu-item:hover,
+.ant-dropdown-menu-submenu-title:hover {
+  background-color: transparent;
+}

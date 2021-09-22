@@ -2,7 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import Avatar from "@material-ui/core/Avatar";
 import profile from "../assets/img2.jpg";
+import { Menu, Dropdown } from "antd";
+import "../styles/Appbar.css";
+import { logout } from "../redux/reducers/Login/login.actions";
+import { connect, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 const Appbar = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push("/login");
+  };
+  const menu = (
+    <Menu>
+      <Menu.Item onClick={() => props.handleShowProfile()}>Profile</Menu.Item>
+      <Menu.Item onClick={() => handleLogout()}>Logout</Menu.Item>
+    </Menu>
+  );
   return (
     <>
       <AppBarContainer className="app-bar">
@@ -11,19 +28,21 @@ const Appbar = (props) => {
           <span className="username text-dark font-bold">Dora Designer!</span>
         </div>
         <div className="avatar-container">
-          <Avatar
-            alt="Profile"
-            src={profile}
-            onClick={() => props.handleShowProfile()}
-            style={{ cursor: "pointer" }}
-          />
+          <Dropdown
+            overlay={menu}
+            placement="bottomRight"
+            arrow
+            trigger={["click"]}
+          >
+            <Avatar alt="Profile" src={profile} style={{ cursor: "pointer" }} />
+          </Dropdown>
         </div>
       </AppBarContainer>
     </>
   );
 };
 
-export default Appbar;
+export default connect()(Appbar);
 
 const AppBarContainer = styled.section`
   width: 100%;

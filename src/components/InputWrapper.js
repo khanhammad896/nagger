@@ -36,7 +36,6 @@ const InputWrapper = (props) => {
                         value={
                           props.tab_no === 0 ? props.fullname : props.phone
                         }
-                        validate={props.validateNames}
                       />
                       <InputError />
                     </>
@@ -114,7 +113,10 @@ const InputWrapper = (props) => {
                     />
                   </div>
                 </div> */}
-                <AvatarWrapper />
+                <AvatarWrapper
+                  handleImage={props.handleImage}
+                  imageURL={props.imageURL}
+                />
               </>
             )}
             {/* {props.tab_no === 2 ? (
@@ -143,7 +145,7 @@ const InputWrapper = (props) => {
                   if (props.tab_no !== 3) {
                     props.slide();
                   } else {
-                    history.push("/login");
+                    props.signup();
                   }
                 }}
               >
