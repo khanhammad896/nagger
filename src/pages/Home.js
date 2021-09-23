@@ -9,6 +9,7 @@ const Home = (props) => {
       <section className="tab">
         <HomeWrapper>
           <Appbar handleShowProfile={props.handleShowProfile} />
+
           <section className="tasks-info-container font-regular text-dark">
             {/* <span>2 Deadlines . 14 Alerts Today</span> */}
           </section>

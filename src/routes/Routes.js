@@ -92,12 +92,17 @@ const Routes = () => {
               {!isLogin ? <SignUp height={height} /> : <Redirect to="/" />}
             </Route>
           </Switch>
-          {location.pathname !== "/login" && location.pathname !== "/signup" ? (
+          {location.pathname === "/" ||
+          location.pathname === "/reminders" ||
+          location.pathname === "/contacts" ||
+          location.pathname === "/calendar" ? (
             <Navbar
               handleShowAddReminder={handleShowAddReminder}
               handleShowAddContact={handleShowAddContact}
             />
-          ) : null}
+          ) : (
+            <Redirect to="/not-found" />
+          )}
         </>
       );
     }

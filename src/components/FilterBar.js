@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { GoSettings } from "react-icons/go";
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { useLocation } from "react-router-dom";
+import GoogleContacts from "react-google-contacts";
+
 const FilterBar = (props) => {
   const location = useLocation();
+
   return (
     <>
       <FilterBarWrapper>
@@ -13,7 +16,12 @@ const FilterBar = (props) => {
         </div>
         {location.pathname === "/contacts" ? (
           <div className="import-icon">
-            <AiOutlineCloudDownload />
+            <GoogleContacts
+              clientId="302207734400-th27bfivl01dt0fingcprlj593jne7ja.apps.googleusercontent.com"
+              buttonText="Import"
+              onSuccess={props.responseCallback}
+              onFailure={props.responseCallback}
+            />
           </div>
         ) : null}
         {/* <div className="filter-bar-icon">

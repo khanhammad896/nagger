@@ -9,6 +9,8 @@ import LettersGroup from "../components/LettersGroup";
 import { connect, useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { setContacts } from "../redux/reducers/Contacts/contacts.actions";
+import GoogleContacts from "react-google-contacts";
+
 const Contacts = (props) => {
   const user = useSelector((state) => state.user.userDetails);
   const dispatch = useDispatch();
@@ -45,6 +47,9 @@ const Contacts = (props) => {
       email: "trina87@gmail.com",
     },
   ];
+  const responseCallback = (response) => {
+    console.log(response);
+  };
   const handleSearchText = (value) => {
     setSearchText(value);
   };
@@ -79,7 +84,7 @@ const Contacts = (props) => {
           placeholder="Search for a contact"
           handleSearchText={handleSearchText}
         />
-        <FilterBar title="All Contacts" />
+        <FilterBar title="All Contacts" responseCallback={responseCallback} />
         <div className="contacts-feed">
           <div className="divider-container">
             <div>
