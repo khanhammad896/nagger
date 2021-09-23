@@ -7,7 +7,7 @@ import { HiOutlineUser, HiOutlineCalendar } from "react-icons/hi";
 import { IoIosArrowForward } from "react-icons/io";
 
 import { useLocation } from "react-router-dom";
-const HomeCard = () => {
+const HomeCard = (props) => {
   const location = useLocation();
   return (
     <div>
@@ -18,7 +18,7 @@ const HomeCard = () => {
         <div className="card-content">
           <div className="card-text">
             <span className="user-name font-regular text-dark">
-              Jonathan D. Dye
+              {props.name}
             </span>
             {location.pathname !== "/contacts" ? (
               <div className="recipients-date-container">

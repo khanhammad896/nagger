@@ -63,11 +63,16 @@ const FilterBarWrapper = styled.div`
     cursor: pointer;
   }
 
-  .import-icon > svg {
-    font-size: 1.5em;
+  .import-icon button {
+    background-color: transparent !important;
+    box-shadow: none !important;
   }
-  .import-button button {
-    background-color: transparent;
+  .import-icon div {
+    display: none;
+  }
+  .import-icon svg {
+    font-size: 1.5em;
+    color: var(--background-theme);
   }
   @media screen and (max-width: 400px) {
     .filter-bar-header,
