@@ -44,8 +44,6 @@ const Contacts = (props) => {
       .catch((error) => console.log("Contacts Error > ", error.response));
   };
   const postImportedContacts = async () => {
-    const data = new FormData();
-    data.append("contacts", importedContacts);
     axios({
       method: "post",
       headers: {
@@ -71,12 +69,14 @@ const Contacts = (props) => {
         newContact.push({
           fullname: contact.title,
           email: contact.email,
+          external_id: "google",
         });
       } else {
         newContact.push({
           fullname: contact.title,
           phone: contact.phoneNumber,
           email: contact.email,
+          external_id: "google",
         });
       }
     });
@@ -106,6 +106,17 @@ const Contacts = (props) => {
                 <>
                   <LetterDivider letter={letter} id={letter} />
                   {contacts
+                    .filter((contact) => {
+                      return (
+                        contact.fullname
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase()) ||
+                        contact.fullname
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase())
+                      );
+                    })
+
                     .filter(
                       (contact) =>
                         contact.fullname[0].toLowerCase() ===

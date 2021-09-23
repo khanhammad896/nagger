@@ -13,7 +13,7 @@ const HomeCard = (props) => {
     <div>
       <HomeCardWrapper>
         <div>
-          <Avatar alt="Profile" src={profile} />
+          <Avatar alt="Profile" />
         </div>
         <div className="card-content">
           <div className="card-text">

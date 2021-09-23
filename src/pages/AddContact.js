@@ -5,30 +5,56 @@ import Button from "@material-ui/core/Button";
 import TextInput from "../components/TextInput";
 import AvatarWrapper from "../components/AvatarWrapper";
 import axios from "axios";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import { setContacts } from "../redux/reducers/Contacts/contacts.actions";
+import cogoToast from "cogo-toast";
 const AddContact = (props) => {
+  const dispatch = useDispatch();
   const [contactInformation, setContactInformation] = useState({
     name: "",
     email: "",
     phone: "",
-    contact_pic: null,
+    profile_url: null,
   });
   const user = useSelector((state) => state.user.userDetails);
+
+  const handleImage = (value) => {
+    const files = value;
+    if (
+      files.type === "image/png" ||
+      files.type === "image/jpeg" ||
+      files.type === "image/jpg"
+    ) {
+      files &&
+        setContactInformation({ ...contactInformation, profile_url: value });
+    } else {
+      cogoToast.error("Invalid file format");
+    }
+  };
+
   const handleAddContact = async () => {
+    const data = new FormData();
+    data.append("contacts[0].fullname", contactInformation.name);
+    data.append("contacts[0].email", contactInformation.email);
+    data.append("contacts[0].phone", contactInformation.phone);
+    data.append("profile_pic", contactInformation.profile_url);
+    data.append("manual", true);
     axios({
       method: "post",
       headers: {
         "content-type": "application/json",
-        Authorization: user.token,
+        Authorization: `Bearer ${user.token}`,
       },
       url: "https://naggerapp.herokuapp.com/user/contact",
-      data: JSON.stringify({
-        name: contactInformation.name,
-        email: contactInformation.email,
-        phone: contactInformation.phone,
-      }),
-    });
+      data: data,
+    })
+      .then(() => {
+        cogoToast.success("Contact created successfully");
+        props.hideAddContact();
+      })
+      .catch((error) => cogoToast.error("Something wrong happened, Try again"));
   };
+  console.log("Contact Information > ", contactInformation);
   return (
     <>
       <AddContactWrapper height={props.height}>
@@ -39,7 +65,7 @@ const AddContact = (props) => {
         <section className="tab-stack">
           <div className="add-contact-feed">
             <div className="add-contact-container">
-              <AvatarWrapper />
+              <AvatarWrapper handleImage={handleImage} />
               <div className="primary-information-container">
                 <span className="primary-heading font-regular text-dark">
                   Primary Info
@@ -109,7 +135,11 @@ const AddContact = (props) => {
                 </div>
               </div> */}
               <div className="nag-button-container">
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleAddContact}
+                >
                   Add Contact
                 </Button>
               </div>

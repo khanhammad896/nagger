@@ -2,8 +2,30 @@ import React, { useState } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { Avatar } from "antd";
 import styled from "styled-components";
+import cogoToast from "cogo-toast";
 const AvatarWrapper = (props) => {
-  const [imageURL, setImageURL] = useState(props.imageURL);
+  const [imageURL, setImageURL] = useState();
+  const [image, setImage] = useState();
+
+  const preview = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => setImageURL(reader.result);
+    reader.onerror = (error) => console.log("Image error", error);
+  };
+  const handleImage = (value) => {
+    const files = value;
+    if (
+      files.type === "image/png" ||
+      files.type === "image/jpeg" ||
+      files.type === "image/jpg"
+    ) {
+      setImage(files);
+      preview(files);
+    } else {
+      cogoToast.error("Invalid file format");
+    }
+  };
   console.log("Image URL  >> ", imageURL);
   return (
     <AvatarContainer>
@@ -22,7 +44,8 @@ const AvatarWrapper = (props) => {
               id="image-input"
               style={{ width: 0.0001, height: 0.0001 }}
               onChange={(e) => {
-                setImageURL(props.handleImage(e.target.files));
+                setImageURL(props.handleImage(e.target.files[0]));
+                handleImage(e.target.files[0]);
               }}
             />
           </div>
