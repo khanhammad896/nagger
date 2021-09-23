@@ -18,10 +18,11 @@ const FilterBar = (props) => {
           <div className="import-icon">
             <GoogleContacts
               clientId="302207734400-th27bfivl01dt0fingcprlj593jne7ja.apps.googleusercontent.com"
-              buttonText="Import"
               onSuccess={props.responseCallback}
               onFailure={props.responseCallback}
-            />
+            >
+              <AiOutlineCloudDownload />
+            </GoogleContacts>
           </div>
         ) : null}
         {/* <div className="filter-bar-icon">
@@ -65,7 +66,9 @@ const FilterBarWrapper = styled.div`
   .import-icon > svg {
     font-size: 1.5em;
   }
-
+  .import-button button {
+    background-color: transparent;
+  }
   @media screen and (max-width: 400px) {
     .filter-bar-header,
     .filter-bar-icon,
