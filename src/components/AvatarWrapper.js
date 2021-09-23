@@ -13,7 +13,7 @@ const AvatarWrapper = (props) => {
     reader.onload = () => setImageURL(reader.result);
     reader.onerror = (error) => console.log("Image error", error);
   };
-  const handleImage = (value) => {
+  const handlePreviewImage = (value) => {
     const files = value;
     if (
       files.type === "image/png" ||
@@ -26,7 +26,6 @@ const AvatarWrapper = (props) => {
       cogoToast.error("Invalid file format");
     }
   };
-  console.log("Image URL  >> ", imageURL);
   return (
     <AvatarContainer>
       <div className="display-container">
@@ -44,8 +43,8 @@ const AvatarWrapper = (props) => {
               id="image-input"
               style={{ width: 0.0001, height: 0.0001 }}
               onChange={(e) => {
-                setImageURL(props.handleImage(e.target.files[0]));
-                handleImage(e.target.files[0]);
+                props.handleImage(e.target.files[0]);
+                handlePreviewImage(e.target.files[0]);
               }}
             />
           </div>

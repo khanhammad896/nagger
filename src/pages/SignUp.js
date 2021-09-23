@@ -42,16 +42,15 @@ const SignUp = (props) => {
   const handleImage = (value) => {
     const files = value;
     if (
-      files[0].type === "image/png" ||
-      files[0].type === "image/jpeg" ||
-      files[0].type === "image/jpg"
+      files.type === "image/png" ||
+      files.type === "image/jpeg" ||
+      files.type === "image/jpg"
     ) {
-      files[0] &&
-        setSignUpInformation({
-          ...signupInformation,
-          profilePicture: files[0],
-        });
-      preview(files[0]);
+      setSignUpInformation({
+        ...signupInformation,
+        profilePicture: files,
+      });
+      preview(files);
       return imageURL;
     } else {
       cogoToast.error("Invalid file format");
@@ -90,18 +89,18 @@ const SignUp = (props) => {
   };
 
   const signup = async () => {
+    const data = new FormData();
+    data.append("username", signupInformation.username);
+    data.append("password", signupInformation.password);
+    data.append("phone", signupInformation.phone);
+    data.append("email", signupInformation.email);
+    data.append("nick_name", signupInformation.fullname);
+    data.append("profilePicture", signupInformation.profilePicture);
     await axios({
       method: "post",
       headers: { "Content-Type": "application/json" },
       url: "https://naggerapp.herokuapp.com/user/signup",
-      data: JSON.stringify({
-        username: signupInformation.username,
-        password: signupInformation.password,
-        phone: signupInformation.phone,
-        email: signupInformation.email,
-        nick_name: signupInformation.fullname,
-        profilePicture: signupInformation.profilePicture,
-      }),
+      data: data,
     })
       .then((data) => {
         if (data.data.ResponseCode === "Success") {
@@ -114,7 +113,6 @@ const SignUp = (props) => {
   };
 
   console.log("Sign up information", signupInformation);
-  console.log("Image URL >> ", imageURL);
   return (
     <SignUpWrapper>
       {checked ? (
@@ -222,7 +220,6 @@ const SignUp = (props) => {
               greet_text="May be you want to share your profile picture here"
               signup={signup}
               handleImage={handleImage}
-              imageURL={imageURL}
             />
           </div>
         </Slide>

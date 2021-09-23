@@ -100,9 +100,7 @@ const Routes = () => {
               handleShowAddReminder={handleShowAddReminder}
               handleShowAddContact={handleShowAddContact}
             />
-          ) : (
-            <Redirect to="/not-found" />
-          )}
+          ) : null}
         </>
       );
     }
