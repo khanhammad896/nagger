@@ -1,33 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import SecondaryAppBar from "../components/SecondaryAppBar";
 import styled from "styled-components";
 import Switch from "@material-ui/core/Switch";
 import { GoTrashcan } from "react-icons/go";
 import TextInput from "../components/TextInput";
 import AvatarWrapper from "../components/AvatarWrapper";
-
+import { connect, useSelector } from "react-redux";
 const Profile = (props) => {
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-  });
-  const [state1, setState1] = React.useState({
-    checkedA: true,
-    checkedB: true,
-  });
-  const [state2, setState2] = React.useState({
-    checkedA: true,
-    checkedB: true,
-  });
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-  const handleChange1 = (event) => {
-    setState1({ ...state1, [event.target.name]: event.target.checked });
-  };
-  const handleChange2 = (event) => {
-    setState2({ ...state2, [event.target.name]: event.target.checked });
-  };
+  const user = useSelector((state) => state.user.userDetails);
+  // const [state, setState] = React.useState({
+  //   checkedA: true,
+  //   checkedB: true,
+  // });
+  // const [state1, setState1] = React.useState({
+  //   checkedA: true,
+  //   checkedB: true,
+  // });
+  // const [state2, setState2] = React.useState({
+  //   checkedA: true,
+  //   checkedB: true,
+  // });
+  // const handleChange = (event) => {
+  //   setState({ ...state, [event.target.name]: event.target.checked });
+  // };
+  // const handleChange1 = (event) => {
+  //   setState1({ ...state1, [event.target.name]: event.target.checked });
+  // };
+  // const handleChange2 = (event) => {
+  //   setState2({ ...state2, [event.target.name]: event.target.checked });
+  // };
 
   return (
     <>
@@ -35,11 +36,11 @@ const Profile = (props) => {
         <SecondaryAppBar backText={`Profile`} hideProfile={props.hideProfile} />
         <section className="tab-stack">
           <div className="profile-feed">
-            <AvatarWrapper />
+            <AvatarWrapper imgSrc={user.profile_url} />
             <div className="profile-greetings">
               <span className="font-regular text-dark">Welcome back,</span>
               <span className="profile-name font-regular text-dark">
-                Dora Designer!
+                {user.nick_name}!
               </span>
             </div>
             <div className="contact-info-heading-container">
@@ -52,6 +53,7 @@ const Profile = (props) => {
                   placeholderColor="dark"
                   border="dark"
                   inputColor="dark"
+                  value={user.phone}
                 />
               </div>
               <div className="profile-input-container">
@@ -60,6 +62,7 @@ const Profile = (props) => {
                   placeholderColor="dark"
                   border="dark"
                   inputColor="dark"
+                  value={user.email}
                 />
               </div>
             </div>
@@ -120,7 +123,7 @@ const Profile = (props) => {
   );
 };
 
-export default Profile;
+export default connect()(Profile);
 
 const ProfileWrapper = styled.div`
   width: 100%;

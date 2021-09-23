@@ -4,10 +4,11 @@ import { Avatar } from "antd";
 import styled from "styled-components";
 const AvatarWrapper = (props) => {
   const [imageURL, setImageURL] = useState(props.imageURL);
+  console.log("Image URL  >> ", imageURL);
   return (
     <AvatarContainer>
       <div className="display-container">
-        {imageURL === null ? (
+        {imageURL === null || imageURL === undefined ? (
           <div className="after">
             <label
               htmlFor="image-input"

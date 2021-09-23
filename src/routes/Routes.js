@@ -11,8 +11,11 @@ import AddReminder from "../pages/AddReminder";
 import AddContact from "../pages/AddContact";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useDispatch } from "react-redux";
+import Cookies from "js-cookie";
+import { setUser } from "../redux/reducers/User/user.actions";
 const Routes = () => {
+  const dispatch = useDispatch();
   const [height, setHeight] = useState(window.innerHeight);
   const [showProfile, setShowProfile] = useState(false);
   const [showAddReminder, setShowAddReminder] = useState(false);
@@ -43,26 +46,17 @@ const Routes = () => {
     setShowAddContact(false);
   };
 
-  // useEffect(() => {
-  //   function handleResize() {
-  //     setHeight(window.innerHeight);
-  //   }
-  //   window.addEventListener("resize", handleResize);
-  // }, []);
-
-  console.log("Height", height);
-  console.log("Show Add Reminder", showAddReminder);
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
+      dispatch(setUser(JSON.parse(Cookies.get("userDetails"))));
+    }
+  }, []);
 
   const routes = () => {
     if (!showProfile && !showAddReminder && !showAddContact) {
       return (
         <>
           <Switch>
-            {/* <Route
-              exact
-              path="/"
-              component={() => <Home handleShowProfile={handleShowProfile} />}
-            /> */}
             <Route exact path="/">
               {isLogin ? (
                 <Home handleShowProfile={handleShowProfile} />
@@ -70,24 +64,27 @@ const Routes = () => {
                 <Redirect to="/login" />
               )}
             </Route>
-            <Route
-              path="/reminders"
-              component={() => (
+            <Route path="/reminders">
+              {isLogin ? (
                 <Reminders handleShowProfile={handleShowProfile} />
+              ) : (
+                <Redirect to="/login" />
               )}
-            />
-            <Route
-              path="/contacts"
-              component={() => (
+            </Route>
+            <Route path="/contacts">
+              {isLogin ? (
                 <Contacts handleShowProfile={handleShowProfile} />
-              )}
-            />
-            <Route
-              path="/calendar"
-              component={() => (
+              ) : (
+                <Redirect to="/login" />
+              )}{" "}
+            </Route>
+            <Route path="/calendar">
+              {isLogin ? (
                 <Calendar handleShowProfile={handleShowProfile} />
-              )}
-            />
+              ) : (
+                <Redirect to="/login" />
+              )}{" "}
+            </Route>
             <Route path="/login">
               {!isLogin ? <Login height={height} /> : <Redirect to="/" />}
             </Route>

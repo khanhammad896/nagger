@@ -10,6 +10,7 @@ import { connect, useDispatch } from "react-redux";
 import { login } from "../redux/reducers/Login/login.actions";
 import { setUser } from "../redux/reducers/User/user.actions";
 import cogoToast from "cogo-toast";
+import Cookies from "js-cookie";
 const Login = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,7 +35,9 @@ const Login = (props) => {
       }),
     })
       .then((response) => {
+        localStorage.setItem("token", response.data.data.token);
         dispatch(setUser(response.data.data));
+        Cookies.set("userDetails", JSON.stringify(response.data.data));
         dispatch(login());
         cogoToast.success("Signed in successfully");
         history.push("/");

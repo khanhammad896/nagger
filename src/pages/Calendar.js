@@ -11,27 +11,10 @@ const Calendar = (props) => {
         <Appbar handleShowProfile={props.handleShowProfile} />
         <DateSelector />
         <div className="calendar-feed">
-          <DateDivider
+          {/* <DateDivider
             date={`Fri Sep 17, 2021`}
             deadline={`2 Deadlines . 14 Alerts`}
-          />
-          <HomeCard />
-          <HomeCard />
-          <DateDivider
-            date={`Sat Sep 18, 2021`}
-            deadline={`0 Deadline . 0 Alert`}
-          />
-          <DateDivider
-            date={`Sun Sep 19, 2021`}
-            deadline={`0 Deadline . 10 Alerts`}
-          />
-          <HomeCard />
-          <HomeCard />
-          <DateDivider
-            date={`Mon Sep 20, 2021`}
-            deadline={`1 Deadline . 0 Alerts`}
-          />
-          <HomeCard />
+          /> */}
         </div>
       </CalendarWrapper>
     </section>

@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import SecondaryAppBar from "../components/SecondaryAppBar";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import TextInput from "../components/TextInput";
 import AvatarWrapper from "../components/AvatarWrapper";
+import axios from "axios";
+import { connect, useSelector } from "react-redux";
 const AddContact = (props) => {
+  const [contactInformation, setContactInformation] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    contact_pic: null,
+  });
+  const user = useSelector((state) => state.user.userDetails);
+  const handleAddContact = async () => {
+    axios({
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        Authorization: user.token,
+      },
+      url: "https://naggerapp.herokuapp.com/user/contact",
+      data: JSON.stringify({
+        name: contactInformation.name,
+        email: contactInformation.email,
+        phone: contactInformation.phone,
+      }),
+    });
+  };
   return (
     <>
       <AddContactWrapper height={props.height}>
@@ -26,6 +50,12 @@ const AddContact = (props) => {
                     placeholderColor="dark"
                     border="dark"
                     inputColor="dark"
+                    setField={(value) =>
+                      setContactInformation({
+                        ...contactInformation,
+                        name: value,
+                      })
+                    }
                   />
                 </div>
                 <div className="addContact-input-container">
@@ -34,6 +64,12 @@ const AddContact = (props) => {
                     placeholderColor="dark"
                     border="dark"
                     inputColor="dark"
+                    setField={(value) =>
+                      setContactInformation({
+                        ...contactInformation,
+                        email: value,
+                      })
+                    }
                   />
                 </div>
                 <div className="addContact-input-container">
@@ -42,6 +78,12 @@ const AddContact = (props) => {
                     placeholderColor="dark"
                     border="dark"
                     inputColor="dark"
+                    setField={(value) =>
+                      setContactInformation({
+                        ...contactInformation,
+                        phone: value,
+                      })
+                    }
                   />
                 </div>
               </div>
@@ -79,7 +121,7 @@ const AddContact = (props) => {
   );
 };
 
-export default AddContact;
+export default connect()(AddContact);
 
 const AddContactWrapper = styled.div`
   width: 100%;

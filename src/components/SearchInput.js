@@ -17,7 +17,11 @@ const SearchInput = (props) => {
             placeholder={props.placeholder}
             onChange={(e) => setText(e.target.value)}
           /> */}
-          <TextInput inputColor="dark" placeholder={props.placeholder} />
+          <TextInput
+            inputColor="dark"
+            placeholder={props.placeholder}
+            setField={props.handleSearchText}
+          />
           <div className="search-icon-container">
             <FiSearch />
           </div>

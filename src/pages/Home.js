@@ -10,26 +10,10 @@ const Home = (props) => {
         <HomeWrapper>
           <Appbar handleShowProfile={props.handleShowProfile} />
           <section className="tasks-info-container font-regular text-dark">
-            <span>2 Deadlines . 14 Alerts Today</span>
+            {/* <span>2 Deadlines . 14 Alerts Today</span> */}
           </section>
           <div className="feed-wrapper">
-            <DateDivider dateRange={"Mon Jun 14, 2021"} day={"Today"} />
-            <HomeCard />
-            <HomeCard />
-            <HomeCard />
-            <DateDivider dateRange={"Tue Jun 15, 2021"} day={"Tomorrow"} />
-            <HomeCard />
-            <HomeCard />
-            <HomeCard />
-            <DateDivider
-              dateRange={"Mon Jun 14 - Jun 21, 2021"}
-              day={"Later this week"}
-            />
-            <HomeCard />
-
-            <HomeCard />
-
-            <HomeCard />
+            {/* <DateDivider dateRange={"Mon Jun 14, 2021"} day={"Today"} /> */}
           </div>
         </HomeWrapper>
       </section>

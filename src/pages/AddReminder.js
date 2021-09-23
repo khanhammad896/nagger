@@ -1,10 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import SecondaryAppBar from "../components/SecondaryAppBar";
 import styled from "styled-components";
 import { Select, Input } from "antd";
-import { Select as MaterialSelect } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import MenuItem from "@material-ui/core/MenuItem";
 import MomentUtils from "@date-io/moment";
 import {
   MuiPickersUtilsProvider,
@@ -14,47 +12,107 @@ import {
 import moment from "moment";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FiClock } from "react-icons/fi";
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
+import { connect, useSelector, useDispatch } from "react-redux";
+const contactsDetails = [
+  {
+    id: 1,
+    name: "Hammad",
+    phone: "+923482232866",
+    email: "khanhammad896@gmail.com",
+  },
+  {
+    id: 2,
+    name: "Howard",
+    phone: "+923492232366",
+    email: "howard02@gmail.com",
+  },
+  {
+    id: 3,
+    name: "Ares",
+    phone: "+923422232866",
+    email: "ares09@gmail.com",
+  },
+  {
+    id: 4,
+    name: "Azeem",
+    phone: "+923482902866",
+    email: "azeem65@gmail.com",
+  },
+  {
+    id: 5,
+    name: "Michael",
+    phone: "+923492532986",
+    email: "michael90@gmail.com",
+  },
+  {
+    id: 6,
+    name: "Trina",
+    phone: "+923286235876",
+    email: "trina87@gmail.com",
+  },
 ];
 const intervalList = [
-  "Every 1 minute",
-  "Every 5 minutes",
-  "Every 30 minutes",
-  "Every 1 hour",
-  "Every day",
-  "Every week",
-  "Every month",
-  "Every year",
+  {
+    id: 0,
+    interval: "Every 1 minute",
+  },
+  {
+    id: 1,
+    interval: "Every 5 minutes",
+  },
+  {
+    id: 2,
+    interval: "Every 30 minutes",
+  },
+  {
+    id: 3,
+    interval: "Every 1 hour",
+  },
+  {
+    id: 4,
+    interval: "Every day",
+  },
+  {
+    id: 5,
+    interval: "Every week",
+  },
+  {
+    id: 6,
+    interval: "Every month",
+  },
+  {
+    id: 7,
+    interval: "Every year",
+  },
 ];
 
 const { TextArea } = Input;
 
 const AddReminder = (props) => {
-  const [selectedDate, setSelectedDate] = React.useState(
-    moment().format("dddd, MMMM DD YYYY")
-  );
+  const [reminderInformation, setReminderInformation] = useState({
+    contact_ids: [],
+    title: "",
+    description: "",
+    date: moment().format("dddd, MMMM DD YYYY"),
+    time: moment().format("hh:mm a"),
+    interval: null,
+  });
 
   const handleDateChange = (date) => {
-    setSelectedDate(date);
+    setReminderInformation({
+      ...reminderInformation,
+      date: date.format("dddd, MMM DD YYYY"),
+    });
   };
-  const [period, setPeriod] = React.useState("");
+  const [period, setPeriod] = useState("");
 
   const handlePeriod = (event) => {
     setPeriod(event.target.value);
   };
   function handleChange(value) {
-    console.log(`selected ${value}`);
+    setReminderInformation({ ...reminderInformation, contact_ids: value });
   }
+
   return (
     <>
       <AddReminderWrapper height={props.height}>
@@ -76,8 +134,10 @@ const AddReminder = (props) => {
                     onChange={handleChange}
                     bordered={false}
                   >
-                    {names.map((name) => (
-                      <Select.Option value={name}>{name}</Select.Option>
+                    {contactsDetails.map((contact) => (
+                      <Select.Option value={contact.id}>
+                        {contact.name}
+                      </Select.Option>
                     ))}
                   </Select>
                 </div>
@@ -114,7 +174,7 @@ const AddReminder = (props) => {
                     variant="inline"
                     margin="normal"
                     id="date-picker-inline"
-                    value={selectedDate}
+                    value={reminderInformation.date}
                     onChange={handleDateChange}
                     KeyboardButtonProps={{
                       "aria-label": "change date",
@@ -126,8 +186,9 @@ const AddReminder = (props) => {
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                   <KeyboardTimePicker
                     margin="normal"
+                    format="hh:mm a"
                     id="time-picker"
-                    value={selectedDate}
+                    inputValue={reminderInformation.time}
                     onChange={handleDateChange}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
@@ -146,10 +207,10 @@ const AddReminder = (props) => {
                   {intervalList.map((interval) => (
                     <Select.Option
                       className="interval-options"
-                      key={intervalList.indexOf(interval)}
-                      value={interval}
+                      key={interval.id}
+                      value={interval.id}
                     >
-                      {interval}
+                      {interval.interval}
                     </Select.Option>
                   ))}
                 </Select>
