@@ -15,75 +15,39 @@ import { FiClock } from "react-icons/fi";
 import { connect, useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Cookies from "js-cookie";
-const contactsDetails = [
-  {
-    id: 1,
-    name: "Hammad",
-    phone: "+923482232866",
-    email: "khanhammad896@gmail.com",
-  },
-  {
-    id: 2,
-    name: "Howard",
-    phone: "+923492232366",
-    email: "howard02@gmail.com",
-  },
-  {
-    id: 3,
-    name: "Ares",
-    phone: "+923422232866",
-    email: "ares09@gmail.com",
-  },
-  {
-    id: 4,
-    name: "Azeem",
-    phone: "+923482902866",
-    email: "azeem65@gmail.com",
-  },
-  {
-    id: 5,
-    name: "Michael",
-    phone: "+923492532986",
-    email: "michael90@gmail.com",
-  },
-  {
-    id: 6,
-    name: "Trina",
-    phone: "+923286235876",
-    email: "trina87@gmail.com",
-  },
-];
+import cogoToast from "cogo-toast";
+
 const intervalList = [
   {
-    id: 0,
+    id: 1,
     interval: "Every 1 minute",
   },
   {
-    id: 1,
+    id: 2,
     interval: "Every 5 minutes",
   },
   {
-    id: 2,
+    id: 3,
     interval: "Every 30 minutes",
   },
   {
-    id: 3,
+    id: 4,
     interval: "Every 1 hour",
   },
   {
-    id: 4,
+    id: 5,
     interval: "Every day",
   },
   {
-    id: 5,
+    id: 6,
     interval: "Every week",
   },
   {
-    id: 6,
+    id: 7,
     interval: "Every month",
   },
   {
-    id: 7,
+    id: 8,
     interval: "Every year",
   },
 ];
@@ -95,23 +59,25 @@ const AddReminder = (props) => {
     contact_ids: [],
     title: "",
     description: "",
-    date: moment().format("dddd, MMMM DD YYYY"),
-    time: moment().format("hh:mm a"),
+    date: moment().format("YYYY-MM-DD"),
+    time: moment().format("hh:mm"),
     interval: null,
   });
   const [notificationType, setNotificationType] = useState("email");
   const [contacts, setContacts] = useState([]);
+  const user = useSelector((state) => state.user.userDetails);
+
   const handleDateChange = (date) => {
     setReminderInformation({
       ...reminderInformation,
-      date: date.format("dddd, MMM DD YYYY"),
+      date: date.format("YYYY-MM-DD"),
     });
   };
 
   const handleTimeChange = (date) => {
     setReminderInformation({
       ...reminderInformation,
-      time: date.format("hh:mm a"),
+      time: date.format("hh:mm"),
     });
   };
 
@@ -119,10 +85,14 @@ const AddReminder = (props) => {
     setReminderInformation({ ...reminderInformation, interval: value });
   };
   const handleChange = (value) => {
-    setReminderInformation({ ...reminderInformation, contact_ids: value });
+    console.log("Values >> ", value);
+    setReminderInformation({
+      ...reminderInformation,
+      contact_ids: value,
+    });
   };
 
-  const getContacts = () => {
+  const getContacts = (value) => {
     axios({
       method: "get",
       headers: {
@@ -130,15 +100,43 @@ const AddReminder = (props) => {
         Authorization: `Bearer ${JSON.parse(Cookies.get("userDetails")).token}`,
       },
       url: "https://naggerapp.herokuapp.com/user/contact",
-      params: { notificationType: notificationType },
+      params: { notificationType: notificationType, fullname: value },
     })
-      .then((response) => setContacts(response.data.data.data))
+      .then((response) => {
+        setContacts(response.data.data.data);
+      })
       .catch((error) => console.log("Contacts Error > ", error.response));
   };
+
+  const postReminder = () => {
+    const data = new FormData();
+    data.append("contacts", reminderInformation.contact_ids);
+    data.append("title", reminderInformation.title);
+    data.append(
+      "schedule_reminder",
+      `${reminderInformation.date}  ${reminderInformation.time}`
+    );
+    data.append("reminder_repeat_id", reminderInformation.interval);
+    data.append("content", reminderInformation.description);
+    axios({
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+      url: "https://naggerapp.herokuapp.com/user/reminder",
+    })
+      .then(() => {
+        cogoToast.success("Reminder created successfully");
+        props.hideAddReminder();
+      })
+      .catch((error) => console.log("Reminder error > ", error.response));
+  };
+
   // useEffect(() => {
   //   getContacts();
   // }, [notificationType]);
-  console.log("Reminder contacts", contacts);
+  // console.log("Reminder contacts", contacts);
   console.log("Reminder Information >> ", reminderInformation);
   return (
     <>
@@ -156,15 +154,20 @@ const AddReminder = (props) => {
                 </span>
                 <div className="contacts-select-container">
                   <Select
-                    // mode="multiple"
+                    mode="multiple"
                     allowClear
                     onChange={handleChange}
                     bordered={false}
                     showSearch
+                    onSearch={(value) => getContacts(value)}
                     onBlur={() => getContacts()}
+                    value={reminderInformation.contact_ids}
                   >
                     {contacts.map((contact) => (
-                      <Select.Option key={contact.id} value={contact.id}>
+                      <Select.Option
+                        key={contact.id}
+                        value={[contact.fullname, contact.id]}
+                      >
                         {contact.fullname}
                       </Select.Option>
                     ))}
@@ -230,7 +233,7 @@ const AddReminder = (props) => {
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                   <KeyboardTimePicker
                     margin="normal"
-                    format="hh:mm a"
+                    format="hh:mm"
                     id="time-picker"
                     inputValue={reminderInformation.time}
                     onChange={handleTimeChange}
@@ -290,7 +293,11 @@ const AddReminder = (props) => {
                 </div>
               </div>
               <div className="nag-button-container">
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={postReminder}
+                >
                   Nag me
                 </Button>
               </div>
@@ -302,7 +309,7 @@ const AddReminder = (props) => {
   );
 };
 
-export default AddReminder;
+export default connect()(AddReminder);
 
 const AddReminderWrapper = styled.div`
   width: 100%;

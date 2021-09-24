@@ -16,7 +16,9 @@ const Reminders = (props) => {
         <Appbar handleShowProfile={props.handleShowProfile} />
         <SearchInput placeholder="Search for a reminder..." />
         <FilterBar title="All Reminders" />
-        <div className="reminder-feed"></div>
+        <div className="reminder-feed">
+          <HomeCard name="John Smith" />
+        </div>
       </ReminderWrapper>
     </section>
   );

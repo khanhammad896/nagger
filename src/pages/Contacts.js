@@ -20,9 +20,26 @@ const Contacts = (props) => {
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [pageData, setPageData] = useState();
+
   const handleSearchText = (value) => {
     setSearchText(value);
+    axios({
+      method: "get",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(Cookies.get("userDetails")).token}`,
+      },
+      url: "https://naggerapp.herokuapp.com/user/contact",
+      params: { page: page, fullname: value },
+    })
+      .then((response) => {
+        dispatch(setContacts([...response.data.data.data]));
+        setPageData(response.data.data.lastPage);
+        console.log("Searching >> ", response.data.data.data);
+      })
+      .catch((error) => console.log("Contacts Error > ", error.response));
   };
+
   let createArrayAtoZ = (_) => {
     return Array.apply(null, { length: 26 }).map((x, i) =>
       String.fromCharCode(65 + i)
@@ -109,17 +126,6 @@ const Contacts = (props) => {
                     <>
                       <LetterDivider letter={letter} id={letter} />
                       {contacts
-                        .filter((contact) => {
-                          return (
-                            contact.fullname
-                              .toLowerCase()
-                              .includes(searchText.toLowerCase()) ||
-                            contact.fullname
-                              .toLowerCase()
-                              .includes(searchText.toLowerCase())
-                          );
-                        })
-
                         .filter(
                           (contact) =>
                             contact.fullname[0].toLowerCase() ===
