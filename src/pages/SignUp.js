@@ -13,14 +13,15 @@ const SignUp = (props) => {
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
   const [reverse, setReverse] = useState(false);
-  const [errors, setErrors] = useState({
-    fullNameError: null,
-    userNameError: null,
-    passwordError: null,
-    confirmPasswordError: null,
-    phoneError: null,
-    emailError: null,
-  });
+  const [error, setError] = useState(null);
+  // const [errors, setErrors] = useState({
+  //   fullNameError: null,
+  //   userNameError: null,
+  //   passwordError: null,
+  //   confirmPasswordError: null,
+  //   phoneError: null,
+  //   emailError: null,
+  // });
   const [imageURL, setImageURL] = useState(null);
   const [signupInformation, setSignUpInformation] = useState({
     fullname: "",
@@ -96,20 +97,24 @@ const SignUp = (props) => {
     data.append("email", signupInformation.email);
     data.append("nick_name", signupInformation.fullname);
     data.append("profilePicture", signupInformation.profilePicture);
-    await axios({
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      url: "https://naggerapp.herokuapp.com/user/signup",
-      data: data,
-    })
-      .then((data) => {
-        if (data.data.ResponseCode === "Success") {
-          cogoToast.success("Signed up successfully");
-          history.push("/login");
-          console.log("Response > ", data);
-        }
+    if (signupInformation.password === signupInformation.confirmPassword) {
+      await axios({
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        url: "https://naggerapp.herokuapp.com/user/signup",
+        data: data,
       })
-      .catch((error) => cogoToast.error(error.response.data.errorMessage));
+        .then((data) => {
+          if (data.data.ResponseCode === "Success") {
+            cogoToast.success("Signed up successfully");
+            history.push("/login");
+            console.log("Response > ", data);
+          }
+        })
+        .catch((error) => setError(error.response.data.errorMessage));
+    } else {
+      setError("Passwords do not match");
+    }
   };
 
   console.log("Sign up information", signupInformation);
@@ -220,6 +225,7 @@ const SignUp = (props) => {
               greet_text="May be you want to share your profile picture here"
               signup={signup}
               handleImage={handleImage}
+              error={error}
             />
           </div>
         </Slide>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import moment from "moment";
 import { TiArrowUnsorted } from "react-icons/ti";
@@ -11,11 +11,11 @@ import {
 } from "@material-ui/pickers";
 
 const DateSelector = (props) => {
-  const [selectedDate, setSelectedDate] = React.useState(
+  const [selectedDate, setSelectedDate] = useState(
     moment().format("dddd, MMMM DD YYYY")
   );
-  const [weekdays, setWeekDays] = React.useState([]);
-
+  const [weekdays, setWeekDays] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
   const updateWeek = () => {
     const week = [];
 
@@ -25,6 +25,7 @@ const DateSelector = (props) => {
         .format("dddd MMM DD")
         .split(" ");
       const dateObj = {
+        index: i,
         day: day[0],
         month: day[1],
         date: day[2],
@@ -67,8 +68,21 @@ const DateSelector = (props) => {
         <div className="month-date-container">
           <div className="date-card-wrapper">
             {weekdays.map((weekday) => (
-              <div className="date-card">
-                <Badge className="date-dot" />
+              <div
+                className={
+                  activeIndex === weekday.index
+                    ? "date-card-selected"
+                    : "date-card"
+                }
+                onClick={() => setActiveIndex(weekday.index)}
+              >
+                <Badge
+                  className={
+                    activeIndex === weekday.index
+                      ? "date-dot-selected"
+                      : "date-dot"
+                  }
+                />
                 <span className="date-card-day">{weekday.day}</span>
                 <span className="date-card-date">{weekday.date}</span>
                 <span className="date-card-month">{weekday.month}</span>
@@ -158,7 +172,7 @@ const DateSelectorWrapper = styled.div`
   }
 
   .date-card:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   .date-card-selected {
     width: 88px;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Input } from "antd";
+import { Button, Alert } from "antd";
 import styled from "styled-components";
 import Switch from "@material-ui/core/Switch";
 import { useHistory, Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { InputWrapperStyle } from "../styles/InputWrapperStyle";
 import TextInput from "./TextInput";
 import AvatarWrapper from "./AvatarWrapper";
 import InputError from "./InputError";
+
 const InputWrapper = (props) => {
   const history = useHistory();
   return (
@@ -155,6 +156,11 @@ const InputWrapper = (props) => {
             {props.tab_no !== 0 ? (
               <div className="go-back">
                 <span onClick={() => props.back()}>Go back</span>
+              </div>
+            ) : null}
+            {props.error !== null && props.tab_no === 3 ? (
+              <div className="error-container">
+                <Alert message={props.error} type="error" showIcon />
               </div>
             ) : null}
             <div className="login-input-container">

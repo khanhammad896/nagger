@@ -44,16 +44,6 @@ export const InputWrapperStyle = `
     align-items: center;
   }
 
-  
-
-  
-
-  
-
-  
-
-  
-
   .apps-login-button {
     width: 80%;
     height: 60px;
@@ -129,7 +119,18 @@ export const InputWrapperStyle = `
   .continue-button{
     width: 100%;
   }
-  
+  .error-container{
+    width: 90%;
+    margin-inline: auto;
+    margin-block-start: 20px;
+  }
+
+  .ant-alert{
+    height: 50px;
+    border-radius: 7px;
+    font-family: var(--font-light);
+    color: var(--text-dark);
+  }
   @media screen and (max-width: 400px) {
     .login-intro-greetings-container {
       font-size: 12px;

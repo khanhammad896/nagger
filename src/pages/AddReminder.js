@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SecondaryAppBar from "../components/SecondaryAppBar";
 import styled from "styled-components";
 import { Select, Input } from "antd";
@@ -13,6 +13,8 @@ import moment from "moment";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FiClock } from "react-icons/fi";
 import { connect, useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import Cookies from "js-cookie";
 const contactsDetails = [
   {
     id: 1,
@@ -97,22 +99,47 @@ const AddReminder = (props) => {
     time: moment().format("hh:mm a"),
     interval: null,
   });
-
+  const [notificationType, setNotificationType] = useState("email");
+  const [contacts, setContacts] = useState([]);
   const handleDateChange = (date) => {
     setReminderInformation({
       ...reminderInformation,
       date: date.format("dddd, MMM DD YYYY"),
     });
   };
-  const [period, setPeriod] = useState("");
 
-  const handlePeriod = (event) => {
-    setPeriod(event.target.value);
+  const handleTimeChange = (date) => {
+    setReminderInformation({
+      ...reminderInformation,
+      time: date.format("hh:mm a"),
+    });
   };
-  function handleChange(value) {
-    setReminderInformation({ ...reminderInformation, contact_ids: value });
-  }
 
+  const handlePeriod = (value) => {
+    setReminderInformation({ ...reminderInformation, interval: value });
+  };
+  const handleChange = (value) => {
+    setReminderInformation({ ...reminderInformation, contact_ids: value });
+  };
+
+  const getContacts = () => {
+    axios({
+      method: "get",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${JSON.parse(Cookies.get("userDetails")).token}`,
+      },
+      url: "https://naggerapp.herokuapp.com/user/contact",
+      params: { notificationType: notificationType },
+    })
+      .then((response) => setContacts(response.data.data.data))
+      .catch((error) => console.log("Contacts Error > ", error.response));
+  };
+  // useEffect(() => {
+  //   getContacts();
+  // }, [notificationType]);
+  console.log("Reminder contacts", contacts);
+  console.log("Reminder Information >> ", reminderInformation);
   return (
     <>
       <AddReminderWrapper height={props.height}>
@@ -129,14 +156,16 @@ const AddReminder = (props) => {
                 </span>
                 <div className="contacts-select-container">
                   <Select
-                    mode="multiple"
+                    // mode="multiple"
                     allowClear
                     onChange={handleChange}
                     bordered={false}
+                    showSearch
+                    onBlur={() => getContacts()}
                   >
-                    {contactsDetails.map((contact) => (
-                      <Select.Option value={contact.id}>
-                        {contact.name}
+                    {contacts.map((contact) => (
+                      <Select.Option key={contact.id} value={contact.id}>
+                        {contact.fullname}
                       </Select.Option>
                     ))}
                   </Select>
@@ -147,7 +176,16 @@ const AddReminder = (props) => {
                   Title:
                 </span>
                 <div className="reminder-title-container">
-                  <Input bordered={false} className="reminder-title-input" />
+                  <Input
+                    bordered={false}
+                    className="reminder-title-input"
+                    onChange={(e) =>
+                      setReminderInformation({
+                        ...reminderInformation,
+                        title: e.target.value,
+                      })
+                    }
+                  />
                 </div>
               </div>
               <div className="reminder-description-container">
@@ -156,6 +194,12 @@ const AddReminder = (props) => {
                   autoSize
                   placeholder="Enter any notes about your reminder here..."
                   className="reminder-description-input"
+                  onChange={(e) =>
+                    setReminderInformation({
+                      ...reminderInformation,
+                      description: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="repetition-info-container">
@@ -189,7 +233,7 @@ const AddReminder = (props) => {
                     format="hh:mm a"
                     id="time-picker"
                     inputValue={reminderInformation.time}
-                    onChange={handleDateChange}
+                    onChange={handleTimeChange}
                     KeyboardButtonProps={{
                       "aria-label": "change time",
                     }}
@@ -197,10 +241,13 @@ const AddReminder = (props) => {
                   />
                 </MuiPickersUtilsProvider>
               </div>
-              <div className="nag-interval-data-containers underline">
+              <div
+                className="nag-interval-data-containers underline"
+                style={{ marginTop: 30 }}
+              >
                 <Select
                   className="period-select"
-                  value={period}
+                  value={reminderInformation.interval}
                   onChange={handlePeriod}
                   bordered={false}
                 >
@@ -217,6 +264,30 @@ const AddReminder = (props) => {
                 <span className="period-icon text-dark">
                   <IoNotificationsOutline />
                 </span>
+              </div>
+              <div className="nag-interval-data-containers">
+                <div className="noti-type-wrapper">
+                  <div
+                    onClick={() => setNotificationType("phone")}
+                    className={
+                      notificationType === "phone"
+                        ? "noti-buttons-active"
+                        : "noti-buttons"
+                    }
+                  >
+                    By Text
+                  </div>
+                  <div
+                    onClick={() => setNotificationType("email")}
+                    className={
+                      notificationType === "email"
+                        ? "noti-buttons-active"
+                        : "noti-buttons"
+                    }
+                  >
+                    By Email
+                  </div>
+                </div>
               </div>
               <div className="nag-button-container">
                 <Button variant="contained" color="primary">
@@ -279,9 +350,6 @@ const AddReminderWrapper = styled.div`
     border-bottom: 1px solid var(--text-dark);
   }
 
-  .ant-select-selection-overflow-item {
-  }
-
   .ant-select-selection-item {
     background-color: #fff;
     border: none;
@@ -294,6 +362,9 @@ const AddReminderWrapper = styled.div`
 
   .reminder-title-input {
     border-bottom: 1px solid var(--text-dark);
+    color: var(--text-dark);
+    font-family: var(--font-light);
+    font-size: 1.3em;
   }
 
   .reminder-description-container {
@@ -380,7 +451,6 @@ const AddReminderWrapper = styled.div`
     color: var(--text-dark);
     font-size: 1.3em;
     padding: 0;
-    margin-block-start: 15px;
   }
 
   .period-select {
@@ -419,7 +489,35 @@ const AddReminderWrapper = styled.div`
       font-size: 12px;
     }
   }
+  .noti-type-wrapper {
+    width: 100%;
+    display: flex;
+    flex-basis: 100%;
+    height: 50px;
+  }
+  .noti-buttons,
+  .noti-buttons-active {
+    margin-inline: 10px;
+    flex-basis: 100%;
+    border-radius: 5px;
+    border: none;
+    background-color: #fff;
+    font-size: 1.3em;
+    font-family: var(--font-light);
+    color: var(--text-dark);
+    box-shadow: 0px 0px 5px 0px #bfbfbf;
+    transition: background-color 0.3s ease-in, color 0.3s ease-in;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+  .noti-buttons-active,
+  .noti-buttons:hover {
+    background-color: var(--background-theme);
+    color: var(--tab-theme);
+  }
   @keyframes slide-up {
     0% {
       transform: translateY(${(props) => props.height}px);

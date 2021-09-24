@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
+import { Alert } from "antd";
 import TextInput from "../components/TextInput";
 import axios from "axios";
 import { connect, useDispatch } from "react-redux";
@@ -18,6 +19,7 @@ const Login = (props) => {
     email: null,
     password: null,
   });
+  const [error, setError] = useState(null);
   const setEmail = (value) => {
     setLoginInformation({ ...loginInformation, email: value });
   };
@@ -42,7 +44,7 @@ const Login = (props) => {
         cogoToast.success("Signed in successfully");
         history.push("/");
       })
-      .catch((error) => cogoToast.error(error.response.data.errorMessage));
+      .catch((error) => setError(error.response.data.errorMessage));
   };
   console.log("Login Information >> ", loginInformation);
   return (
@@ -99,6 +101,11 @@ const Login = (props) => {
                 <Link to="/signup">Actually, I'm new... sign me up.</Link>
               </span>
             </div>
+            {error !== null ? (
+              <div className="error-container">
+                <Alert message={error} type="error" showIcon />
+              </div>
+            ) : null}
             <div className="login-input-container continue-button">
               <Button
                 onClick={() => {
@@ -222,6 +229,18 @@ const LoginWrapper = styled.div`
     font-family: var(--font-regular);
     font-size: 2em;
     color: var(--background-theme);
+  }
+  .error-container {
+    width: 90%;
+    margin-inline: auto;
+    margin-block-start: 20px;
+  }
+
+  .ant-alert {
+    height: 50px;
+    border-radius: 7px;
+    font-family: var(--font-light);
+    color: var(--text-dark);
   }
 
   @media screen and (max-width: 450px) {

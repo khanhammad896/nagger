@@ -36,9 +36,15 @@ const HomeCard = (props) => {
                 </div>
               </div>
             ) : null}
-            <span className="message-text font-regular text-dark">
-              Hello, are you there?
-            </span>
+            {location.pathname !== "/contacts" ? (
+              <span className="message-text font-regular text-dark">
+                Hello, are you there?
+              </span>
+            ) : (
+              <span className="message-text font-regular text-dark">
+                {props.email}
+              </span>
+            )}
           </div>
           {location.pathname !== "/reminders" &&
           location.pathname !== "/calendar" &&

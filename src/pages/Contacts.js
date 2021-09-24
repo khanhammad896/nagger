@@ -11,6 +11,7 @@ import axios from "axios";
 import { setContacts } from "../redux/reducers/Contacts/contacts.actions";
 import { Pagination } from "antd";
 import Cookies from "js-cookie";
+import { height } from "dom-helpers";
 const Contacts = (props) => {
   const user = useSelector((state) => state.user.userDetails);
   const contacts = useSelector((state) => state.contacts.contacts);
@@ -101,40 +102,61 @@ const Contacts = (props) => {
         <FilterBar title="All Contacts" responseCallback={responseCallback} />
         <div className="contacts-feed">
           <div className="divider-container">
-            <div>
-              {createArrayAtoZ().map((letter) => (
-                <>
-                  <LetterDivider letter={letter} id={letter} />
-                  {contacts
-                    .filter((contact) => {
-                      return (
-                        contact.fullname
-                          .toLowerCase()
-                          .includes(searchText.toLowerCase()) ||
-                        contact.fullname
-                          .toLowerCase()
-                          .includes(searchText.toLowerCase())
-                      );
-                    })
+            {contacts.length > 0 ? (
+              <>
+                <div>
+                  {createArrayAtoZ().map((letter) => (
+                    <>
+                      <LetterDivider letter={letter} id={letter} />
+                      {contacts
+                        .filter((contact) => {
+                          return (
+                            contact.fullname
+                              .toLowerCase()
+                              .includes(searchText.toLowerCase()) ||
+                            contact.fullname
+                              .toLowerCase()
+                              .includes(searchText.toLowerCase())
+                          );
+                        })
 
-                    .filter(
-                      (contact) =>
-                        contact.fullname[0].toLowerCase() ===
-                        letter.toLowerCase()
-                    )
-                    .map((contact) => (
-                      <HomeCard name={contact.fullname} />
-                    ))}
-                </>
-              ))}
-            </div>
-            <Pagination
-              defaultCurrent={1}
-              showSizeChanger
-              showQuickJumper
-              total={pageData * 10}
-              onChange={(page) => setPage(page)}
-            />
+                        .filter(
+                          (contact) =>
+                            contact.fullname[0].toLowerCase() ===
+                            letter.toLowerCase()
+                        )
+                        .map((contact) => (
+                          <HomeCard
+                            name={contact.fullname}
+                            email={contact.email}
+                          />
+                        ))}
+                    </>
+                  ))}
+                </div>
+                <Pagination
+                  defaultCurrent={1}
+                  showSizeChanger
+                  showQuickJumper
+                  total={pageData * 10}
+                  onChange={(page) => setPage(page)}
+                />
+              </>
+            ) : (
+              <div
+                style={{
+                  textAlign: "center",
+                  fontSize: "2em",
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontFamily: "var(--font-regular)",
+                  opacity: 0.4,
+                }}
+              >
+                No Contacts yet!
+              </div>
+            )}
           </div>
 
           <LettersGroup />

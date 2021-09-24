@@ -14,6 +14,7 @@ import SignUp from "../pages/SignUp";
 import { connect, useSelector, useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { setUser } from "../redux/reducers/User/user.actions";
+import NotFound from "../pages/NotFound";
 const Routes = () => {
   const dispatch = useDispatch();
   const [height, setHeight] = useState(window.innerHeight);
@@ -91,6 +92,7 @@ const Routes = () => {
             <Route path="/signup">
               {!isLogin ? <SignUp height={height} /> : <Redirect to="/" />}
             </Route>
+            <Route path="/not-found" component={NotFound} />
           </Switch>
           {location.pathname === "/" ||
           location.pathname === "/reminders" ||
@@ -100,6 +102,9 @@ const Routes = () => {
               handleShowAddReminder={handleShowAddReminder}
               handleShowAddContact={handleShowAddContact}
             />
+          ) : location.pathname !== "/login" &&
+            location.pathname !== "/signup" ? (
+            <Redirect to="/not-found" />
           ) : null}
         </>
       );
